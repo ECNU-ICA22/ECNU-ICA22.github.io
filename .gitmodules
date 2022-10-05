@@ -2,3 +2,8 @@
 	path = themes/hugo-theme-luna
 	url = https://github.com/Ice-Hazymoon/hugo-theme-luna
 	branch = master
+
+[submodule "content"]
+	path = content
+	url = https://github.com/ecnu-ica22/blog-contents
+	branch = main
