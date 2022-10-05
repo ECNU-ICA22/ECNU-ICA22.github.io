@@ -47,9 +47,9 @@ jobs:
               uses: peaceiris/actions-gh-pages@v3
               with:
                 personal_token: ${{ secrets.TOKEN }}
-                external_repository: "qq497020450/qq497020450.github.io"
+                external_repository: "ecnu-ica22/ecnu-ica22.github.io"
                 publish_branch: master
                 publish_dir: ./docs
                 force_orphan: true
-                user_name: qq497020450
-                user_email: imiku.me@gmail.com
+                user_name: ecnu-ica22
+                user_email: ecnu_ica@163.com
