@@ -211,10 +211,10 @@ params:
     enabled: true
     provider: "giscus" # custom | giscus
     giscus: &giscus
-      repo: "Ice-Hazymoon/hugo-theme-luna"
-      repoID: "R_kgDOHQOwYw"
-      category: "Comments"
-      categoryID: "DIC_kwDOHQOwY84CP0Sy"
+      repo: "ECNU-ICA22/ECNU-ICA22.github.io"
+      repoID: "R_kgDOIIrgSA"
+      category: "Gerernal"
+      categoryID: "DIC_kwDOIIrgSM4CRznI"
       mapping: "title"
       reactionsEnabled: 1
       emitMetadata: 0
@@ -248,9 +248,9 @@ params:
   console:
     enabled: true
     leftColor: "#dd6065"
-    leftText: "Hugo Theme Luna"
+    leftText: "ECNU ICA-LK"
     rightColor: "#feb462"
-    rightText: "Powered by Hugo ❤ Luna"
+    rightText: "Powered by Hugo Luna"
 
   # 标题计数器
   # Title counter
