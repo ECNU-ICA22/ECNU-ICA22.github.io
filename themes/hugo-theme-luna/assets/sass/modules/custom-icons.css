@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "iconfont"; /* Project id  */
+    src: url('./fonts/custom-icons.ttf') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font: normal normal 400 14px/1 "iconfont";
+    font-size: inherit;
+    display: inline-block;
+    transform: translate(0, 0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-weibo:before {
+    content: "\e6c4";
+}
+
+.icon-weibo-outline:before {
+    content: "\e619";
+}
