@@ -1,7 +1,7 @@
 theme: hugo-theme-luna
 # current theme repo: https://github.com/Ice-Hazymoon/hugo-theme-luna
 
-baseURL: https://ECNU-ICA22.github.io/
+baseURL: https://ecnu-ica22.github.io/
 languageCode: zh-cn
 defaultContentLanguage: zh-cn
 # languageCode: en-us
@@ -211,7 +211,7 @@ params:
     enabled: true
     provider: "giscus" # custom | giscus
     giscus: &giscus
-      repo: "ECNU-ICA22/ECNU-ICA22.github.io"
+      repo: "ecnu-ica22/ecnu-ica22.github.io"
       repoID: "R_kgDOIIrgSA"
       category: "Gerernal"
       categoryID: "DIC_kwDOIIrgSM4CRznI"
