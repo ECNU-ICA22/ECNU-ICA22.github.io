@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>花 on ECNU ICA-LK</title>
+    <link>http://localhost:1313/zh-cn/tags/%E8%8A%B1/</link>
+    <description>Recent content in 花 on ECNU ICA-LK</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 01 Oct 2022 02:49:13 +0200</lastBuildDate><atom:link href="http://localhost:1313/zh-cn/tags/%E8%8A%B1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>画廊（春）</title>
+      <link>http://localhost:1313/zh-cn/2022/10/01/flower-gallery.html/</link>
+      <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
+      
+      <guid>http://localhost:1313/zh-cn/2022/10/01/flower-gallery.html/</guid>
+      <description>一些关于花的照片</description>
+    </item>
+    
+  </channel>
+</rss>

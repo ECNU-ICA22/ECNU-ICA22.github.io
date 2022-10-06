@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Luna on ECNU ICA-LK</title>
+    <link>http://localhost:1313/zh-cn/categories/luna/</link>
+    <description>Recent content in Luna on ECNU ICA-LK</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 01 Oct 2022 13:12:47 +0200</lastBuildDate><atom:link href="http://localhost:1313/zh-cn/categories/luna/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>短代码（Shortcodes）</title>
+      <link>http://localhost:1313/zh-cn/2022/10/01/shortcodes.html/</link>
+      <pubDate>Sat, 01 Oct 2022 13:12:47 +0200</pubDate>
+      
+      <guid>http://localhost:1313/zh-cn/2022/10/01/shortcodes.html/</guid>
+      <description>一些短代码示例</description>
+    </item>
+    
+  </channel>
+</rss>
