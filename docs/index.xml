@@ -13,9 +13,37 @@
         <link>http://localhost:1313/</link>
         <managingEditor>ecnu-cs-ica</managingEditor>
         <description>A simple, performance-first, SEO-friendly Hugo theme</description>
-        <lastBuildDate>Sat, 01 Oct 2022 13:12:47 +0200</lastBuildDate>
+        <lastBuildDate>Thu, 06 Oct 2022 17:27:49 +0800</lastBuildDate>
         <language>zh-cn</language>
         <generator>Hugo -- gohugo.io</generator><item>
+            <title>SSL VQA</title>
+            <link>http://localhost:1313/2022/10/06/ssl-vqa.html/</link>
+            <pubDate>Thu, 06 Oct 2022 17:27:49 +0800</pubDate>
+            <guid>http://localhost:1313/2022/10/06/ssl-vqa.html/</guid><description>
+
+&lt;h1 class=&#34;group &#34; id=&#34;ssl-vqa&#34;
+    &gt;SSL-VQA&lt;a href=&#34;#ssl-vqa&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;QICE&lt;/strong&gt;：可以迫使模型参考图像内容，而不是盲目回答。为此，我们提出了一个称为问题图像相关性估计（QICE）的辅助任务，即二元分类任务，用于在回答问题之前预测问题图像对是否相关。在本文中，我们定义了相关问题图像对，因为图像可以用来回答具有特定答案的问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;平衡问题-图像对&lt;/strong&gt;：通过替换（Q，I）问答对中的I，（Q，I）为相关问答对c=1，（Q，I’）为不相关问答对c=0。最终得到的数据集有一半是相关，一般是无关。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;相关性估计&lt;/strong&gt;：利用生成的平衡数据，我们可以训练QICE模型，通过优化交叉熵损失来预测每个问题图像对的相关标签。
+&lt;img src=&#34;1.png&#34; width=&#34;1600px&#34; height=&#34;200px&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Lself可以被解释为自监督训练损失，因为它仅利用我们生成的数据中的标签监督c。目标函数确保QICE模型能够理解问题和图像内容，因为每个Q对应于平衡的相关和无关实例，并且不依赖语言先验。在下一小节中，我们将讨论如何利用我们的辅助任务QICE和平衡数据，以帮助VQA模型在统一框架中消除语言偏见。&lt;/p&gt;
+&lt;p&gt;在本节中，我们提出了一个统一的VQA框架，可以在训练期间同时回答问题和估计问题图像相关性。显然，上面定义的QICE任务可以与VQA共享相同的网络结构，因为它们具有完全相同的输入和类似的输出：它们都将问题图像对（I，Q）作为输入，VQA预测答案空间a上的分布，而QICE生成特定答案a上的二进制标签。这种特性促使我们在统一的VQA框架中同时解决这两个任务，如图2所示。&lt;/p&gt;
+&lt;img src=&#34;图片2.png&#34; width=&#34;1600px&#34; height=&#34;200px&#34; /&gt;
+&lt;p&gt;对于图2（a）所示的VQA模型，它将相关问题图像对（Q，I）作为输入，并预测答案空间a上的分布F（a|Q，I），可通过最小化VQA损失Lvqa ce或Lvqa ml进行优化。该目标函数教导模型学习回答问题的能力。对于图2（c）中显示的QICE，给定对应于特定答案a的问题图像对（I，Q），VQA模型的预测概率P（a|Q，I）可被视为（I，Q）是相关对的置信度。概率越大，匹配度越高。因此，Lself可以重写为：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;该模型需要对问题图像相关性估计任务进行正确的二值预测，这可以加强模型以更好地理解图像，因为每个问题都与等量的相关和不相关图像配对。更具体地说，Lself的第一项旨在最大化问题图像对相关的置信度，这与VQA任务的目标一致，该任务以高置信度预测地面真值A。&lt;/p&gt;
+&lt;p&gt;最重要的是，Lself的第二项被设计为最小化一对相关的置信度，这完全符合语言先验约简。直观地说，VQA模型的问题依赖性可以通过给定不相关图像时正确回答问题的置信度来衡量。信心越大，依赖性越强。最小化无关对的置信度可以显式地防止VQA模型被语言先验过度驱动，这里我们将其命名为问题依赖性损失Lqd：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;最小化P（A | Q，I’）和最小化−log(1 − P(A|Q, I’))等价。但在训练时最小化前者比最小化后者稳定。所以将公式更新为:&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;因此，QICE任务自然可以被视为基础多任务学习，包含两个任务：原始VQA任务和语言先验约简任务。我们可以将Lself重新表述如下：&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;其中，Lvqa可以是任何VQA损失（Lvqa ce或Lvqa ml），α是超参数。显然，Lself可以被视为广义的VQA损失，因为当α=0时，它退化为Lvqa。这意味着问题依赖性损失Lqd实际上充当正则化子，防止VQA模型记忆语言先验并迫使其更好地理解图像。因此，Lself在控制回答问题和减少语言先验之间的平衡方面提供了灵活性。此外，我们不需要显式优化模型，使其成为估计问题图像对相关性的专家，我们只需要使用其平衡监督来补偿VQA中的偏见和自监督损失。在此之后，我们的方法可以在不使用外部监督的情况下以自我监督的方式减轻语言先验。&lt;/p&gt;
+</description></item><item>
             <title>短代码（Shortcodes）</title>
             <link>http://localhost:1313/2022/10/01/shortcodes.html/</link>
             <pubDate>Sat, 01 Oct 2022 13:12:47 +0200</pubDate>
@@ -724,152 +752,152 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;div class=&#34;carousel&#34;&gt;
-    &lt;div class=&#34;slider-wrapper&#34;&gt;&lt;input id=&#34;slide-375264189-0&#34;checked=&#34;checked&#34;name=&#34;slide-375264189-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-375264189-1&#34;name=&#34;slide-375264189-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-375264189-2&#34;name=&#34;slide-375264189-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-375264189-3&#34;name=&#34;slide-375264189-slides&#34; type=&#34;radio&#34; /&gt;&lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-375264189-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-375264189-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-375264189-2&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-375264189-3&#34;&gt;&lt;/label&gt;&lt;/div&gt;
-        &lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-375264189-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-375264189-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-375264189-2&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-375264189-3&#34;&gt;&lt;/label&gt;&lt;/div&gt;
-        &lt;div class=&#34;slider-nav&#34;&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-375264189-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-375264189-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-375264189-2&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-375264189-3&#34;&gt;&lt;/label&gt;&lt;/div&gt;
-        &lt;div class=&#34;slider-content&#34;&gt;&lt;div class=&#34;slide slide-375264189-0&#34;&gt;
+    &lt;div class=&#34;slider-wrapper&#34;&gt;&lt;input id=&#34;slide-372981645-0&#34;checked=&#34;checked&#34;name=&#34;slide-372981645-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-372981645-1&#34;name=&#34;slide-372981645-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-372981645-2&#34;name=&#34;slide-372981645-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-372981645-3&#34;name=&#34;slide-372981645-slides&#34; type=&#34;radio&#34; /&gt;&lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-372981645-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-372981645-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-372981645-2&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-372981645-3&#34;&gt;&lt;/label&gt;&lt;/div&gt;
+        &lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-372981645-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-372981645-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-372981645-2&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-372981645-3&#34;&gt;&lt;/label&gt;&lt;/div&gt;
+        &lt;div class=&#34;slider-nav&#34;&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-372981645-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-372981645-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-372981645-2&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-372981645-3&#34;&gt;&lt;/label&gt;&lt;/div&gt;
+        &lt;div class=&#34;slider-content&#34;&gt;&lt;div class=&#34;slide slide-372981645-0&#34;&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=1&#34; /&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=1&#34; alt=&#34;&#34; /&gt;
-                &lt;/div&gt;&lt;div class=&#34;slide slide-375264189-1&#34;&gt;
+                &lt;/div&gt;&lt;div class=&#34;slide slide-372981645-1&#34;&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=2&#34; /&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=2&#34; alt=&#34;&#34; /&gt;
-                &lt;/div&gt;&lt;div class=&#34;slide slide-375264189-2&#34;&gt;
+                &lt;/div&gt;&lt;div class=&#34;slide slide-372981645-2&#34;&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=3&#34; /&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=3&#34; alt=&#34;&#34; /&gt;
-                &lt;/div&gt;&lt;div class=&#34;slide slide-375264189-3&#34;&gt;
+                &lt;/div&gt;&lt;div class=&#34;slide slide-372981645-3&#34;&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=4&#34; /&gt;
                     &lt;img src=&#34;https://unsplash.it/1920/1080/?random=4&#34; alt=&#34;&#34; /&gt;
                 &lt;/div&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;style&gt;#slide-375264189-0:checked ~ .slider-content .slide-375264189-0{
+    &lt;style&gt;#slide-372981645-0:checked ~ .slider-content .slide-372981645-0{
                 
                 opacity:1;
             }
-            #slide-375264189-0:checked ~ .slider-nav .nav-button[for=&#34;slide-375264189-0&#34;]{
+            #slide-372981645-0:checked ~ .slider-nav .nav-button[for=&#34;slide-372981645-0&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-375264189-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-0&#34;] + .nav-arrow{
+            #slide-372981645-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-0&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-375264189-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-0&#34;]:last-of-type{
+            #slide-372981645-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-0&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-375264189-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-0&#34;],
-            #slide-375264189-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-0&#34;] ~ .nav-arrow.prev{
+            #slide-372981645-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-0&#34;],
+            #slide-372981645-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-0&#34;] ~ .nav-arrow.prev{
                 z-index:2;
-            }#slide-375264189-1:checked ~ .slider-content .slide-375264189-1{
+            }#slide-372981645-1:checked ~ .slider-content .slide-372981645-1{
                 
                 opacity:1;
             }
-            #slide-375264189-1:checked ~ .slider-nav .nav-button[for=&#34;slide-375264189-1&#34;]{
+            #slide-372981645-1:checked ~ .slider-nav .nav-button[for=&#34;slide-372981645-1&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-375264189-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-1&#34;] + .nav-arrow{
+            #slide-372981645-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-1&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-375264189-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-1&#34;]:last-of-type{
+            #slide-372981645-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-1&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-375264189-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-1&#34;],
-            #slide-375264189-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-1&#34;] ~ .nav-arrow.prev{
+            #slide-372981645-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-1&#34;],
+            #slide-372981645-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-1&#34;] ~ .nav-arrow.prev{
                 z-index:2;
-            }#slide-375264189-2:checked ~ .slider-content .slide-375264189-2{
+            }#slide-372981645-2:checked ~ .slider-content .slide-372981645-2{
                 
                 opacity:1;
             }
-            #slide-375264189-2:checked ~ .slider-nav .nav-button[for=&#34;slide-375264189-2&#34;]{
+            #slide-372981645-2:checked ~ .slider-nav .nav-button[for=&#34;slide-372981645-2&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-375264189-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-2&#34;] + .nav-arrow{
+            #slide-372981645-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-2&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-375264189-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-2&#34;]:last-of-type{
+            #slide-372981645-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-2&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-375264189-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-2&#34;],
-            #slide-375264189-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-2&#34;] ~ .nav-arrow.prev{
+            #slide-372981645-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-2&#34;],
+            #slide-372981645-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-2&#34;] ~ .nav-arrow.prev{
                 z-index:2;
-            }#slide-375264189-3:checked ~ .slider-content .slide-375264189-3{
+            }#slide-372981645-3:checked ~ .slider-content .slide-372981645-3{
                 
                 opacity:1;
             }
-            #slide-375264189-3:checked ~ .slider-nav .nav-button[for=&#34;slide-375264189-3&#34;]{
+            #slide-372981645-3:checked ~ .slider-nav .nav-button[for=&#34;slide-372981645-3&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-375264189-3:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-3&#34;] + .nav-arrow{
+            #slide-372981645-3:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-3&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-375264189-3:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-375264189-3&#34;]:last-of-type{
+            #slide-372981645-3:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-372981645-3&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-375264189-3:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-3&#34;],
-            #slide-375264189-3:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-375264189-3&#34;] ~ .nav-arrow.prev{
+            #slide-372981645-3:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-3&#34;],
+            #slide-372981645-3:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-372981645-3&#34;] ~ .nav-arrow.prev{
                 z-index:2;
             }&lt;/style&gt;
 &lt;/div&gt;
 
 &lt;div class=&#34;carousel&#34;&gt;
-    &lt;div class=&#34;slider-wrapper&#34;&gt;&lt;input id=&#34;slide-379861542-0&#34;checked=&#34;checked&#34;name=&#34;slide-379861542-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-379861542-1&#34;name=&#34;slide-379861542-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-379861542-2&#34;name=&#34;slide-379861542-slides&#34; type=&#34;radio&#34; /&gt;&lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-379861542-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-379861542-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-379861542-2&#34;&gt;&lt;/label&gt;&lt;/div&gt;
-        &lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-379861542-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-379861542-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-379861542-2&#34;&gt;&lt;/label&gt;&lt;/div&gt;
-        &lt;div class=&#34;slider-nav&#34;&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-379861542-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-379861542-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-379861542-2&#34;&gt;&lt;/label&gt;&lt;/div&gt;
-        &lt;div class=&#34;slider-content&#34;&gt;&lt;div class=&#34;slide slide-379861542-0&#34;&gt;
+    &lt;div class=&#34;slider-wrapper&#34;&gt;&lt;input id=&#34;slide-256147839-0&#34;checked=&#34;checked&#34;name=&#34;slide-256147839-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-256147839-1&#34;name=&#34;slide-256147839-slides&#34; type=&#34;radio&#34; /&gt;&lt;input id=&#34;slide-256147839-2&#34;name=&#34;slide-256147839-slides&#34; type=&#34;radio&#34; /&gt;&lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-256147839-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-256147839-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow prev&#34; for=&#34;slide-256147839-2&#34;&gt;&lt;/label&gt;&lt;/div&gt;
+        &lt;div class=&#34;slider-arrow-nav&#34;&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-256147839-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-256147839-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-arrow next&#34; for=&#34;slide-256147839-2&#34;&gt;&lt;/label&gt;&lt;/div&gt;
+        &lt;div class=&#34;slider-nav&#34;&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-256147839-0&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-256147839-1&#34;&gt;&lt;/label&gt;&lt;label class=&#34;nav-button&#34; for=&#34;slide-256147839-2&#34;&gt;&lt;/label&gt;&lt;/div&gt;
+        &lt;div class=&#34;slider-content&#34;&gt;&lt;div class=&#34;slide slide-256147839-0&#34;&gt;
                     &lt;img src=&#34;1.jpg&#34; /&gt;
                     &lt;img src=&#34;1.jpg&#34; alt=&#34;&#34; /&gt;
-                &lt;/div&gt;&lt;div class=&#34;slide slide-379861542-1&#34;&gt;
+                &lt;/div&gt;&lt;div class=&#34;slide slide-256147839-1&#34;&gt;
                     &lt;img src=&#34;2.jpg&#34; /&gt;
                     &lt;img src=&#34;2.jpg&#34; alt=&#34;&#34; /&gt;
-                &lt;/div&gt;&lt;div class=&#34;slide slide-379861542-2&#34;&gt;
+                &lt;/div&gt;&lt;div class=&#34;slide slide-256147839-2&#34;&gt;
                     &lt;img src=&#34;3.jpg&#34; /&gt;
                     &lt;img src=&#34;3.jpg&#34; alt=&#34;&#34; /&gt;
                 &lt;/div&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;style&gt;#slide-379861542-0:checked ~ .slider-content .slide-379861542-0{
+    &lt;style&gt;#slide-256147839-0:checked ~ .slider-content .slide-256147839-0{
                 
                 opacity:1;
             }
-            #slide-379861542-0:checked ~ .slider-nav .nav-button[for=&#34;slide-379861542-0&#34;]{
+            #slide-256147839-0:checked ~ .slider-nav .nav-button[for=&#34;slide-256147839-0&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-379861542-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-379861542-0&#34;] + .nav-arrow{
+            #slide-256147839-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-256147839-0&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-379861542-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-379861542-0&#34;]:last-of-type{
+            #slide-256147839-0:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-256147839-0&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-379861542-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-379861542-0&#34;],
-            #slide-379861542-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-379861542-0&#34;] ~ .nav-arrow.prev{
+            #slide-256147839-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-256147839-0&#34;],
+            #slide-256147839-0:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-256147839-0&#34;] ~ .nav-arrow.prev{
                 z-index:2;
-            }#slide-379861542-1:checked ~ .slider-content .slide-379861542-1{
+            }#slide-256147839-1:checked ~ .slider-content .slide-256147839-1{
                 
                 opacity:1;
             }
-            #slide-379861542-1:checked ~ .slider-nav .nav-button[for=&#34;slide-379861542-1&#34;]{
+            #slide-256147839-1:checked ~ .slider-nav .nav-button[for=&#34;slide-256147839-1&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-379861542-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-379861542-1&#34;] + .nav-arrow{
+            #slide-256147839-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-256147839-1&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-379861542-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-379861542-1&#34;]:last-of-type{
+            #slide-256147839-1:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-256147839-1&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-379861542-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-379861542-1&#34;],
-            #slide-379861542-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-379861542-1&#34;] ~ .nav-arrow.prev{
+            #slide-256147839-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-256147839-1&#34;],
+            #slide-256147839-1:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-256147839-1&#34;] ~ .nav-arrow.prev{
                 z-index:2;
-            }#slide-379861542-2:checked ~ .slider-content .slide-379861542-2{
+            }#slide-256147839-2:checked ~ .slider-content .slide-256147839-2{
                 
                 opacity:1;
             }
-            #slide-379861542-2:checked ~ .slider-nav .nav-button[for=&#34;slide-379861542-2&#34;]{
+            #slide-256147839-2:checked ~ .slider-nav .nav-button[for=&#34;slide-256147839-2&#34;]{
                     background: rgba(255,255,255,1);
             }
-            #slide-379861542-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-379861542-2&#34;] + .nav-arrow{
+            #slide-256147839-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-256147839-2&#34;] + .nav-arrow{
                 z-index:4;
             }
-            #slide-379861542-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-379861542-2&#34;]:last-of-type{
+            #slide-256147839-2:checked ~ .slider-arrow-nav .nav-arrow.next[for=&#34;slide-256147839-2&#34;]:last-of-type{
                 z-index:2;
             }
-            #slide-379861542-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-379861542-2&#34;],
-            #slide-379861542-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-379861542-2&#34;] ~ .nav-arrow.prev{
+            #slide-256147839-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-256147839-2&#34;],
+            #slide-256147839-2:checked ~ .slider-arrow-nav .nav-arrow.prev[for=&#34;slide-256147839-2&#34;] ~ .nav-arrow.prev{
                 z-index:2;
             }&lt;/style&gt;
 &lt;/div&gt;
@@ -983,18 +1011,18 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;div class=&#34;tabs my-4 flex flex-wrap&#34;&gt;
 
-&lt;input type=&#34;radio&#34; name=&#34;tabs&#34; id=&#34;tab-548716329-&#34;checked=&#34;checked&#34;/&gt;
-&lt;label class=&#34;order-1 block cursor-pointer px-4 py-2 font-bold&#34; for=&#34;tab-548716329-&#34;&gt;中文&lt;/label&gt;
+&lt;input type=&#34;radio&#34; name=&#34;tabs&#34; id=&#34;tab-735219864-&#34;checked=&#34;checked&#34;/&gt;
+&lt;label class=&#34;order-1 block cursor-pointer px-4 py-2 font-bold&#34; for=&#34;tab-735219864-&#34;&gt;中文&lt;/label&gt;
 &lt;div class=&#34;tab order-last hidden w-full grow border-t border-gray-200 p-4 dark:border-gray-600&#34;&gt;百合花（学名：Lilium）通称百合花，是百合目百合科的一属，为多年生草本球根植物，属内物种繁多，经常作为观赏植物。主要分布在亚洲东部、欧洲、北美洲等北半球温带地区，全球已发现有至少96个品种，其中5种产于台湾。近年更有不少经过人工杂交而产生的新品种，如OT百合、东方型百合、玫瑰百合等。百合属对猫来说有剧毒。&lt;/div&gt;
 
 
-&lt;input type=&#34;radio&#34; name=&#34;tabs&#34; id=&#34;tab-419652387-&#34;/&gt;
-&lt;label class=&#34;order-1 block cursor-pointer px-4 py-2 font-bold&#34; for=&#34;tab-419652387-&#34;&gt;English&lt;/label&gt;
+&lt;input type=&#34;radio&#34; name=&#34;tabs&#34; id=&#34;tab-716829534-&#34;/&gt;
+&lt;label class=&#34;order-1 block cursor-pointer px-4 py-2 font-bold&#34; for=&#34;tab-716829534-&#34;&gt;English&lt;/label&gt;
 &lt;div class=&#34;tab order-last hidden w-full grow border-t border-gray-200 p-4 dark:border-gray-600&#34;&gt;Lilium is a genus of herbaceous flowering plants growing from bulbs, all with large prominent flowers. They are the true lilies. Lilies are a group of flowering plants which are important in culture and literature in much of the world. Most species are native to the northern hemisphere and their range is temperate climates and extends into the subtropics. Many other plants have &amp;ldquo;lily&amp;rdquo; in their common names, but do not belong to the same genus and are therefore not true lilies.&lt;/div&gt;
 
 
-&lt;input type=&#34;radio&#34; name=&#34;tabs&#34; id=&#34;tab-682157394-&#34;/&gt;
-&lt;label class=&#34;order-1 block cursor-pointer px-4 py-2 font-bold&#34; for=&#34;tab-682157394-&#34;&gt;Español&lt;/label&gt;
+&lt;input type=&#34;radio&#34; name=&#34;tabs&#34; id=&#34;tab-893612547-&#34;/&gt;
+&lt;label class=&#34;order-1 block cursor-pointer px-4 py-2 font-bold&#34; for=&#34;tab-893612547-&#34;&gt;Español&lt;/label&gt;
 &lt;div class=&#34;tab order-last hidden w-full grow border-t border-gray-200 p-4 dark:border-gray-600&#34;&gt;Las especies de Lilium, comúnmente llamadas azucenas o lirios, constituyen un género con alrededor de 110 integrantes que se incluye dentro de la familia de las liliáceas. Los lirios son herbáceas perennes de tallos erectos con numerosas hojas alternas, lineares a lance balas. Crecen a partir de bulbos formados por capas de escamas carnosas sin túnica.&lt;/div&gt;
 
 
