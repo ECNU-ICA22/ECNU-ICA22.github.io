@@ -46,7 +46,7 @@ jobs:
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
               with:
-                deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
+                # deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY  }}
                 # 获取提交文章源码时的commit message，作为发布gh-pages分支的信息
                 commit_message: ${{ github.event.head_commit.message }}
                 full_commit_message: ${{ github.event.head_commit.message }}
