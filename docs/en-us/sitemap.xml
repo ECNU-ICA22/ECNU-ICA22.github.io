@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/en-us/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
     <lastmod>2022-10-02T15:00:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/categories/"
+                href="http://localhost:1313/zh-cn/categories/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -19,17 +19,17 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/categories/"
+                href="http://localhost:1313/categories/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2022-10-02T15:00:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/"
+                href="http://localhost:1313/zh-cn/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -39,47 +39,47 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/"
+                href="http://localhost:1313/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/tags/hugo/</loc>
+    <loc>http://localhost:1313/tags/hugo/</loc>
     <lastmod>2022-10-02T15:00:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/tags/hugo/"
+                href="http://localhost:1313/zh-cn/tags/hugo/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/tags/hugo/"
+                href="http://localhost:1313/tags/hugo/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/categories/luna/</loc>
+    <loc>http://localhost:1313/categories/luna/</loc>
     <lastmod>2022-10-02T15:00:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/categories/luna/"
+                href="http://localhost:1313/zh-cn/categories/luna/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/categories/luna/"
+                href="http://localhost:1313/categories/luna/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/posts/</loc>
+    <loc>http://localhost:1313/posts/</loc>
     <lastmod>2022-10-02T15:00:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/posts/"
+                href="http://localhost:1313/zh-cn/posts/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -89,47 +89,47 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/posts/"
+                href="http://localhost:1313/posts/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/tags/shortcodes/</loc>
+    <loc>http://localhost:1313/tags/shortcodes/</loc>
     <lastmod>2022-10-02T15:00:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
+                href="http://localhost:1313/zh-cn/tags/shortcodes/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
                 href="http://localhost:1313/tags/shortcodes/"
                 />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/tags/shortcodes/"
-                />
   </url><url>
-    <loc>http://localhost:1313/en-us/2022/10/01/shortcodes.html/</loc>
+    <loc>http://localhost:1313/2022/10/01/shortcodes.html/</loc>
     <lastmod>2022-10-02T15:00:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/2022/10/01/shortcodes.html/"
+                href="http://localhost:1313/zh-cn/2022/10/01/shortcodes.html/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/2022/10/01/shortcodes.html/"
+                href="http://localhost:1313/2022/10/01/shortcodes.html/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2022-10-02T15:00:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/tags/"
+                href="http://localhost:1313/zh-cn/tags/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -139,17 +139,17 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/tags/"
+                href="http://localhost:1313/tags/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/archives/</loc>
+    <loc>http://localhost:1313/archives/</loc>
     <lastmod>2022-10-02T14:58:43+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/archives/"
+                href="http://localhost:1313/zh-cn/archives/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -159,122 +159,122 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/archives/"
+                href="http://localhost:1313/archives/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/github/</loc>
+    <loc>http://localhost:1313/github/</loc>
     <lastmod>2022-10-02T14:58:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/github/"
+                href="http://localhost:1313/zh-cn/github/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/github/"
+                href="http://localhost:1313/github/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/weibo/</loc>
+    <loc>http://localhost:1313/weibo/</loc>
     <lastmod>2022-10-02T14:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/weibo/"
+                href="http://localhost:1313/zh-cn/weibo/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/weibo/"
+                href="http://localhost:1313/weibo/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/2022/10/01/luna-released.html/</loc>
+    <loc>http://localhost:1313/2022/10/01/luna-released.html/</loc>
     <lastmod>2022-10-02T15:00:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/2022/10/01/luna-released.html/"
+                href="http://localhost:1313/zh-cn/2022/10/01/luna-released.html/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/2022/10/01/luna-released.html/"
+                href="http://localhost:1313/2022/10/01/luna-released.html/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2022-10-02T14:58:24+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/about/"
+                href="http://localhost:1313/zh-cn/about/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/about/"
+                href="http://localhost:1313/about/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/2022/10/01/hugo-encrypt.html/</loc>
+    <loc>http://localhost:1313/2022/10/01/hugo-encrypt.html/</loc>
     <lastmod>2022-10-02T14:59:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
+                href="http://localhost:1313/zh-cn/2022/10/01/hugo-encrypt.html/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
                 href="http://localhost:1313/2022/10/01/hugo-encrypt.html/"
                 />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/2022/10/01/hugo-encrypt.html/"
-                />
   </url><url>
-    <loc>http://localhost:1313/en-us/tags/english/</loc>
+    <loc>http://localhost:1313/tags/english/</loc>
     <lastmod>2022-10-02T15:00:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/en-us/tags/flower/</loc>
+    <loc>http://localhost:1313/tags/flower/</loc>
     <lastmod>2022-10-02T14:59:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/en-us/2022/10/01/flower-gallery.html/</loc>
+    <loc>http://localhost:1313/2022/10/01/flower-gallery.html/</loc>
     <lastmod>2022-10-02T14:59:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
+                href="http://localhost:1313/zh-cn/2022/10/01/flower-gallery.html/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
                 href="http://localhost:1313/2022/10/01/flower-gallery.html/"
                 />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/2022/10/01/flower-gallery.html/"
-                />
   </url><url>
-    <loc>http://localhost:1313/en-us/categories/gallery/</loc>
+    <loc>http://localhost:1313/categories/gallery/</loc>
     <lastmod>2022-10-02T14:59:46+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/en-us/2022/10/01/typography.html/</loc>
+    <loc>http://localhost:1313/2022/10/01/typography.html/</loc>
     <lastmod>2022-10-02T15:00:35+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/2022/10/01/typography.html/"
+                href="http://localhost:1313/zh-cn/2022/10/01/typography.html/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -284,32 +284,32 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/2022/10/01/typography.html/"
+                href="http://localhost:1313/2022/10/01/typography.html/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/links/</loc>
+    <loc>http://localhost:1313/links/</loc>
     <lastmod>2022-09-30T10:06:03+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/links/"
+                href="http://localhost:1313/zh-cn/links/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/links/"
+                href="http://localhost:1313/links/"
                 />
   </url><url>
-    <loc>http://localhost:1313/en-us/search/</loc>
+    <loc>http://localhost:1313/search/</loc>
     <lastmod>2022-09-30T10:06:03+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/search/"
+                href="http://localhost:1313/zh-cn/search/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -319,7 +319,7 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/en-us/search/"
+                href="http://localhost:1313/search/"
                 />
   </url>
 </urlset>

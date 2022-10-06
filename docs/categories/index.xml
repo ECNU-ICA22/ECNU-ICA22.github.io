@@ -17,20 +17,11 @@
     </item>
     
     <item>
-      <title>主题</title>
-      <link>http://localhost:1313/categories/%E4%B8%BB%E9%A2%98/</link>
-      <pubDate>Sat, 01 Oct 2022 07:01:32 +0000</pubDate>
-      
-      <guid>http://localhost:1313/categories/%E4%B8%BB%E9%A2%98/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>画廊</title>
-      <link>http://localhost:1313/categories/%E7%94%BB%E5%BB%8A/</link>
+      <title>Gallery</title>
+      <link>http://localhost:1313/categories/gallery/</link>
       <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
       
-      <guid>http://localhost:1313/categories/%E7%94%BB%E5%BB%8A/</guid>
+      <guid>http://localhost:1313/categories/gallery/</guid>
       <description></description>
     </item>
     
