@@ -3,7 +3,7 @@ theme: hugo-theme-luna
 
 baseURL: https://ecnu-ica22.github.io/
 languageCode: zh-cn
-defaultContentLanguage: en-us
+defaultContentLanguage: zh-cn
 # languageCode: en-us
 # defaultContentLanguage: en-us
 title: "ECNU ICA-LK"

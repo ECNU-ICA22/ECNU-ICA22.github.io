@@ -46,9 +46,9 @@ jobs:
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
               with:
-                personal_token: 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
+                personal_token: ${{ secrets.TOKEN }}
                 external_repository: "ecnu-ica22/ecnu-ica22.github.io"
-                publish_branch: master
+                publish_branch: main
                 publish_dir: ./docs
                 force_orphan: true
                 user_name: ecnu-ica22

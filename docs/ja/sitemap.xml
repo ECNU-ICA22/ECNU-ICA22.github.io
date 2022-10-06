@@ -8,12 +8,12 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
+                hreflang="zh-cn"
                 href="http://localhost:1313/"
                 />
     <xhtml:link
@@ -28,12 +28,12 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/posts/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/posts/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
+                hreflang="zh-cn"
                 href="http://localhost:1313/posts/"
                 />
     <xhtml:link
@@ -48,12 +48,12 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/tags/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/tags/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
+                hreflang="zh-cn"
                 href="http://localhost:1313/tags/"
                 />
     <xhtml:link
@@ -74,12 +74,12 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/2022/10/01/typography.html/"
+                href="http://localhost:1313/en-us/2022/10/01/typography.html/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/2022/10/01/typography.html/"
+                href="http://localhost:1313/2022/10/01/typography.html/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -94,12 +94,12 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/archives/"
+                href="http://localhost:1313/en-us/archives/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/archives/"
+                href="http://localhost:1313/archives/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -112,12 +112,12 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/categories/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/categories/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
+                hreflang="zh-cn"
                 href="http://localhost:1313/categories/"
                 />
     <xhtml:link
@@ -133,12 +133,12 @@
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
-                href="http://localhost:1313/zh-cn/search/"
+                href="http://localhost:1313/search/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
-                href="http://localhost:1313/search/"
+                href="http://localhost:1313/en-us/search/"
                 />
     <xhtml:link
                 rel="alternate"

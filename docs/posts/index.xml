@@ -8,12 +8,12 @@
     <language>zh-cn</language>
     <lastBuildDate>Sat, 01 Oct 2022 13:12:47 +0200</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Shortcodes</title>
+      <title>短代码（Shortcodes）</title>
       <link>http://localhost:1313/2022/10/01/shortcodes.html/</link>
       <pubDate>Sat, 01 Oct 2022 13:12:47 +0200</pubDate>
       
       <guid>http://localhost:1313/2022/10/01/shortcodes.html/</guid>
-      <description>Some shortcode examples</description>
+      <description>一些短代码示例</description>
     </item>
     
     <item>
@@ -22,34 +22,37 @@
       <pubDate>Sat, 01 Oct 2022 07:01:32 +0000</pubDate>
       
       <guid>http://localhost:1313/2022/10/01/luna-released.html/</guid>
-      <description>Hugo theme luna has been released, welcome to use it!</description>
+      <description>Hugo 主题 Luna 已发布，欢迎使用！</description>
     </item>
     
     <item>
-      <title>Article Encryption Test</title>
-      <link>http://localhost:1313/2022/10/01/hugo-encrypt.html/</link>
-      <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
-      
-      <guid>http://localhost:1313/2022/10/01/hugo-encrypt.html/</guid>
-      <description>This is a test article for encryption</description>
-    </item>
-    
-    <item>
-      <title>Flower Gallery</title>
+      <title>画廊（春）</title>
       <link>http://localhost:1313/2022/10/01/flower-gallery.html/</link>
       <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
       
       <guid>http://localhost:1313/2022/10/01/flower-gallery.html/</guid>
-      <description>Some photos of flowers</description>
+      <description>一些关于花的照片</description>
     </item>
     
     <item>
-      <title>Typography</title>
+      <title>加密文章测试</title>
+      <link>http://localhost:1313/2022/10/01/hugo-encrypt.html/</link>
+      <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
+      
+      <guid>http://localhost:1313/2022/10/01/hugo-encrypt.html/</guid>
+      <description>Hugo 文章加密测试</description>
+    </item>
+    
+    <item>
+      <title>中文排版测试</title>
       <link>http://localhost:1313/2022/10/01/typography.html/</link>
       <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
       
       <guid>http://localhost:1313/2022/10/01/typography.html/</guid>
-      <description>&lt;p&gt;Until now, trying to style an article, document, or blog post with Tailwind has been a tedious task that required a keen eye for typography and a lot of complex custom CSS.&lt;/p&gt;</description>
+      <description>&lt;h2 class=&#34;group &#34; id=&#34;中文文章排版实例论语学而篇第一&#34;
+    &gt;中文文章排版实例：论语学而篇第一&lt;a href=&#34;#%e4%b8%ad%e6%96%87%e6%96%87%e7%ab%a0%e6%8e%92%e7%89%88%e5%ae%9e%e4%be%8b%e8%ae%ba%e8%af%ad%e5%ad%a6%e8%80%8c%e7%af%87%e7%ac%ac%e4%b8%80&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;</description>
     </item>
     
   </channel>
