@@ -6,7 +6,16 @@
     <description>Recent content in Posts on ECNU ICA-LK</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 01 Oct 2022 13:12:47 +0200</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Oct 2022 16:13:39 +0800</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>22 10 05</title>
+      <link>http://localhost:1313/2022/10/06/22-10-05.html/</link>
+      <pubDate>Thu, 06 Oct 2022 16:13:39 +0800</pubDate>
+      
+      <guid>http://localhost:1313/2022/10/06/22-10-05.html/</guid>
+      <description>aaaaaaaaa</description>
+    </item>
+    
     <item>
       <title>短代码（Shortcodes）</title>
       <link>http://localhost:1313/2022/10/01/shortcodes.html/</link>
