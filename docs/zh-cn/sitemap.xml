@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
+    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -23,12 +23,12 @@
                 />
   </url><url>
     <loc>http://localhost:1313/categories/deeplearning/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
+    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
+    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -48,7 +48,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
+    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -67,13 +67,8 @@
                 href="http://localhost:1313/posts/"
                 />
   </url><url>
-    <loc>http://localhost:1313/2022/10/06/ssl-vqa.html/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
+    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -93,6 +88,16 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/vqa/</loc>
+    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/</loc>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>http://localhost:1313/2022/10/06/ssl-vqa.html/</loc>
     <lastmod>2022-10-06T17:52:22+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

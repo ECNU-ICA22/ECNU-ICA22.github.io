@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="lang-zh-cn">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="keywords" content="VQA,DeepLearning,ECNU,ICA,ICA-LK," /><meta name="description" content="PreFIL论文解读" />
+<meta itemprop="description" content="PreFIL论文解读" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta itemprop="name" content="一种多模态融合方法PreFIL - ECNU ICA-LK" />
+<link href="http://localhost:1313/index.xml" title="一种多模态融合方法PreFIL - ECNU ICA-LK" type="application/rss+xml" rel="alternate" />
+<title>一种多模态融合方法PreFIL - ECNU ICA-LK</title><link rel="stylesheet" href="/main.css" /><meta property="og:site_name" content="一种多模态融合方法PreFIL - ECNU ICA-LK" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="一种多模态融合方法PreFIL" />
+<meta property="og:description" content="PreFIL论文解读" />
+<meta property="og:url" content="http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/" /><meta property="og:image" content="http://localhost:1313/featured.png" /><meta property="og:image:width" content="1366" /><meta property="og:image:height" content="768" /><meta property="article:publisher" content="http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/" /><meta property="article:published_time" content="2022-10-13T10:34:49&#43;08:00" /><meta property="article:modified_time" content="2022-10-13T10:59:55&#43;08:00" /><meta name="theme-color" content="#dd6065" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="一种多模态融合方法PreFIL - ECNU ICA-LK" />
+<meta name="apple-mobile-web-app-status-bar-style" content="white" />
+<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" /><meta name="twitter:title" content="一种多模态融合方法PreFIL - ECNU ICA-LK" />
+<meta name="twitter:description" content="PreFIL论文解读" />
+<meta name="twitter:url" content="http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/" /><meta name="twitter:image" content="http://localhost:1313/featured.png" /><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /><link rel="manifest" href="/manifest.json" /><link href="/icon.png" rel="shortcut icon" />
+<link href="/icon.png" rel="Bookmark" />
+<link rel="apple-touch-icon" href="/icon.png" /><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "一种多模态融合方法PreFIL",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http:\/\/localhost:1313\/2022\/10\/13\/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html\/"
+  },"genre": "posts","keywords": "VQA","wordcount": 3999 ,
+  "url": "http:\/\/localhost:1313\/2022\/10\/13\/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html\/","datePublished": "2022-10-13T10:34:49\u002b08:00","dateModified": "2022-10-13T10:59:55\u002b08:00","author": {
+    "@type": "Person",
+    "name": "ecnu-cs-ica"
+  },"description": ""
+}
+</script>
+
+
+    </head>
+    
+    <body class="dark:bg-darkBg dark:text-darkText">
+        <div class="relative mx-auto shadow-lg md:max-w-4xl xl:max-w-4xl 2xl:max-w-4xl">
+            <div class="main flex flex-col justify-between bg-white dark:bg-darkFg"><header class="relative"><nav id="nav" class="navbar top-0 z-10 flex items-center border-b px-5 py-6 dark:border-darkBorder md:px-10">
+        <div class="route-items flex w-full items-center justify-around"><a
+                    title="首页"
+                    data-active-link="/"
+                    href="/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-home flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">首页</span>
+                </a><a
+                    title="关于我"
+                    data-active-link="/about/"
+                    href="/about/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-heart flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">关于我</span>
+                </a><a
+                    title="朋友们"
+                    data-active-link="/links/"
+                    href="/links/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-people flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">朋友们</span>
+                </a><a
+                    title="归档"
+                    data-active-link="/archives/"
+                    href="/archives/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-bar-chart flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">归档</span>
+                </a><a
+                    title="Weibo"
+                    data-active-link="/weibo/"
+                    href="/weibo/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="iconfont icon-weibo flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">Weibo</span>
+                </a><a
+                    title="GitHub"
+                    data-active-link="/github/"
+                    href="/github/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-github flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">GitHub</span>
+                </a><a
+                    title="搜索"
+                    data-active-link="/search/"
+                    href="/search/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-search flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">搜索</span>
+                </a>
+        </div>
+    </nav><nav class="sub-navbar z-10 flex items-center border-b px-5 py-2 dark:border-darkBorder md:px-10"><a
+                title="分类"
+                data-active-link="/categories/"
+                href="/categories/"
+                class=" relative flex cursor-pointer items-center mr-4 text-gray-400 dark:text-darkText transition duration-150 ease-[ease] hover:text-theme"
+            >
+                <i
+                    class="eva eva-folder leading-none mr-1"
+                ></i>
+                <span>分类</span>
+            </a><a
+                title="标签"
+                data-active-link="/tags/"
+                href="/tags/"
+                class=" relative flex cursor-pointer items-center mr-4 text-gray-400 dark:text-darkText transition duration-150 ease-[ease] hover:text-theme"
+            >
+                <i
+                    class="eva eva-pricetags leading-none mr-1"
+                ></i>
+                <span>标签</span>
+            </a></nav><div class="dark-mode-switch absolute right-0 top-0 z-10 cursor-pointer pr-2 pt-2 text-xl leading-none">
+    <i class="eva eva-moon opacity-20 dark:opacity-70"></i>
+</div>
+</header>
+<main class="relative flex flex-grow " id="swup"><style>:root {
+        --font:Times New Roman,Times,Heti Song,serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    }</style><div class="type-posts layout- w-full"><div class="relative h-full">
+    <div class="relative h-full">
+        <div class="page-view-article flex h-full flex-col bg-white dark:bg-darkFg"><div class="relative"><div>
+    <div class="-mb-2 w-full p-6 pb-0 text-3xl md:px-10">
+        一种多模态融合方法PreFIL
+    </div>
+</div></div><div class="article-info border-b p-6 pb-3 text-sm dark:border-darkBorder md:px-10">
+    <div>
+        <div class="mb-3 mr-4 inline-flex items-center sm:rounded-full">
+            <i class="eva eva-clock-outline mr-1"></i>
+            <span>
+                <time
+                    title="发布于 2022年10月13日 10:34:49"datetime="2022-10-13T10:34:49+08:00">2022年10月13日</time
+                >
+            </span>
+        </div><div class="mb-3 mr-4 inline-flex items-center sm:rounded-full">
+                <i class="eva eva-flag-outline mr-1"></i>
+                <span>8 分钟</span>
+            </div></div><div class="mb-3 flex items-center">
+            <i class="eva eva-pricetags-outline mr-1"></i>
+            <span class="mr-3">标签</span><a href="/tags/vqa" title="VQA" class="group mr-2 flex items-center text-sm">
+                    <i class="mr-1 text-gray-400 group-hover:text-theme">#</i>
+                    <span class="text-gray-400 group-hover:text-theme">VQA</span>
+                </a></div><div class="mb-3 flex items-center">
+            <i class="eva eva-folder-outline mr-1"></i>
+            <span class="mr-3">分类</span><a href="/categories/deeplearning" title="DeepLearning" class="group flex items-center text-sm">
+                    <span class="text-gray-400 group-hover:text-theme">DeepLearning</span>
+                    <span class="mx-0.5 group-last:hidden">,</span>
+                </a></div></div><aside
+            class="toc border-b border-gray-300 px-5 py-5 dark:border-darkBorder md:px-10 2xl:fixed 2xl:top-10 2xl:m-0 2xl:-ml-72 2xl:w-72 2xl:border-none 2xl:p-0 2xl:py-4 2xl:pr-4 "
+        >
+            <header>
+                <h1 class="mb-3 text-2xl font-bold 2xl:mb-4">文章目录</h1>
+            </header>
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#abstract">Abstract：</a></li>
+        <li><a href="#1introduction">1.introduction</a></li>
+        <li><a href="#2related-work">2.Related work</a></li>
+        <li><a href="#3prefil模型">3.PReFIL模型</a></li>
+        <li><a href="#4实验和结果">4.实验和结果</a></li>
+        <li><a href="#5讨论">5.讨论</a></li>
+        <li><a href="#6结论">6.结论</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside><section class="article-content typo relative flex-grow px-6 py-5 md:px-10"><i title="更快的阅读" id="bionicReading" class="absolute right-0 top-0 cursor-pointer p-3"
+            ><svg class="w-4 h-4 fill-current text-gray-400" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10811" ><path d="M480 192c-19.2 0-32-12.8-32-32v-128c0-19.2 12.8-32 32-32s32 12.8 32 32v128c0 19.2-12.8 32-32 32zM160 1024c-6.4 0-19.2 0-25.6-6.4l-128-128c0-6.4-6.4-19.2-6.4-25.6s6.4-19.2 6.4-25.6l512-512c12.8-6.4 38.4-6.4 51.2 0l128 128c0 6.4 6.4 19.2 6.4 25.6s-6.4 19.2-6.4 25.6l-512 512c-6.4 6.4-19.2 6.4-25.6 6.4z m-83.2-160l83.2 83.2 467.2-467.2-83.2-83.2-467.2 467.2zM992 576h-128c-19.2 0-32-12.8-32-32s12.8-32 32-32h128c19.2 0 32 12.8 32 32s-12.8 32-32 32zM768 288c-6.4 0-19.2 0-25.6-6.4-12.8-12.8-12.8-32 0-44.8l96-96c12.8-12.8 32-12.8 44.8 0s12.8 32 0 44.8l-96 96c0 6.4-12.8 6.4-19.2 6.4zM256 288c-6.4 0-19.2 0-25.6-6.4L134.4 185.6c-6.4-12.8-6.4-38.4 0-51.2s32-12.8 44.8 0l96 96c12.8 12.8 12.8 32 0 44.8 0 12.8-12.8 12.8-19.2 12.8zM864 896c-6.4 0-19.2 0-25.6-6.4l-96-96c-12.8-12.8-12.8-32 0-44.8s32-12.8 44.8 0l96 96c12.8 12.8 12.8 32 0 44.8 0 6.4-12.8 6.4-19.2 6.4z" p-id="10812"></path><path d="M544 640c-6.4 0-19.2 0-25.6-6.4l-128-128c-6.4-12.8-6.4-38.4 0-51.2s32-12.8 44.8 0l128 128c12.8 12.8 12.8 38.4 6.4 51.2-6.4 6.4-19.2 6.4-25.6 6.4z" p-id="10813"></path></svg></i
+        >
+
+<h1 class="group " id="answering-questions-about-data-visualizations-using-efficient-bimodal-fusion"
+    >Answering Questions about Data Visualizations using Efficient Bimodal Fusion<a href="#answering-questions-about-data-visualizations-using-efficient-bimodal-fusion"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h1>
+
+
+
+<h3 class="group " id="abstract"
+    >Abstract：<a href="#abstract"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>Chart question answering (CQA) is a newly proposed visual question answering (VQA) task where an algorithm must answer questions about data visualizations, e.g. bar charts, pie charts, and line graphs. CQA requires capabilities that natural-image VQA algorithms lack: fine-grained measurements, optical character recognition, and handling out-of-vocabulary words in both questions and answers. Without modifications, state-of-the-art VQA algorithms perform poorly on this task. Here, we propose a novel CQA algorithm called parallel recurrent fusion of image and language (PReFIL). PReFIL first learns bimodal embeddings by fusing question and image features and then intelligently aggregates these learned embeddings to answer the given question. Despite its simplicity, PReFIL greatly surpasses state-of-the art systems and human baselines on both the FigureQA and DVQA datasets. Additionally, we demonstrate that PReFIL can be used to reconstruct tables by asking a series of questions about a chart.</p>
+
+
+<h3 class="group " id="1introduction"
+    >1.introduction<a href="#1introduction"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>图表QA（CQA）是一项VQA任务，涉及回答有关数据可视化的问题。从形式上讲，给定数据可视化图像I和关于I的问题Q，CQA模型必须预测答案a。CQA需要理解图像中不同“符号”（图表中的元素）之间的关系。与自然图像相比，即使对图像进行微小的修改，也会导致正确答案的剧烈变化，这使得CQA成为研究推理机制的极好平台。CQA通常需要光学字符识别（OCR）和处理给定可视化所特有的单词。</p>
+<p>本文描述了一种新的算法，称为图像与语言并行递归融合（PReFIL）。PReFIL通过使用低级和高级图像特征共同学习双模嵌入，这使得它能够回答需要多步骤推理和比较的复杂问题，而无需使用专门的关系或注意模块。大量实验表明，在两个具有挑战性的CQA数据集中，我们的算法性能优于当前最先进的方法。</p>
+<p>我们的主要贡献是：</p>
+<p>• 严格审查了现有的CQA数据集，概述了它们的优缺点（第2.1节）。<br/>
+• 使用众包方式收集DVQA数据集的人的表现（第4节）<br/>
+• 提出了一种新的算法，称为并行递归早期图像与语言融合（PReFIL）（第3节）。PReFIL在CQA数据集上大大超过了现有方法，在DVQA和FigureQA上也优于人类（第4节）。PReFIL的代码和预先培训的模型将公开发布。<br/>
+• 率先使用迭代式问答从图表中重建表格（第4.4节）<br/>
+• 根据结果，概述了创建更具挑战性的数据集和算法以理解数据可视化的路线图（第5节）。</p>
+
+
+<h3 class="group " id="2related-work"
+    >2.Related work<a href="#2related-work"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+
+
+<h4 class="group " id="21两个数据集dvqa和figureqa"
+    >2.1两个数据集DVQA和FigureQA。<a href="#21%e4%b8%a4%e4%b8%aa%e6%95%b0%e6%8d%ae%e9%9b%86dvqa%e5%92%8cfigureqa"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>如图所示。</p>
+<p><figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h4 class="group " id="211dvqa与figureqa"
+    >2.1.1DVQA与FigureQA<a href="#211dvqa%e4%b8%8efigureqa"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>DVQA和FigureQA各有优缺点。我们在下面对它们进行比较和对比。共同优势：两个数据集都很大，并提供足够的训练样本来训练大型模型。这两个数据集都为问答对之外的所有图形元素提供了详细的注释，这两个数据集的创建者都试图消除一些偏见的来源。最后，这两个数据集都提供了简单和困难测试拆分，其中困难测试拆分衡量的泛化程度超出了培训期间看到的范围。但DVQA的优势大于FigureQA。共同限制：作为合成生成的数据集，DVQA和FigureQA都忽略了现实世界数据可视化中的许多可变性。所有DVQA的图表都是用Matplotlib制作的，所有FigureQA的都是用Bokeh制作的。FigureQA仅使用通用标题和其他图表元素。DVQA有一些种类，但最终仅限于几个模板。虽然问题可能很复杂，但它们缺乏人工生成的查询的多样性。</p>
+
+
+<h4 class="group " id="22现有cqa算法"
+    >2.2现有CQA算法<a href="#22%e7%8e%b0%e6%9c%89cqa%e7%ae%97%e6%b3%95"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>SANDY使用了叠加注意力网络（SAN）的改进版本，该版本已广泛用于VQA。SAN使用这个问题来关注卷积特征映射。它无法处理DVQA测试集中的OOV单词或其问题和答案中的图表特定单词。为了解决这个问题，SANDY使用现成的OCR方法来识别这些单词，并引入动态编码来表示OOV和图表特定的单词。SANDY的OCR动态编码方案可以合并到任何基于分类的VQA算法中。<br/>
+FigureQA的创建者在他们的数据集上使用了关系网络（RN）。RN编码图像中每对“对象”之间的成对交互，使其能够回答涉及关系的问题。每个“对象”都是卷积特征映射的一个单元。在CLEVR中，RN被证明在组合推理方面特别有效，它超过了图QA中的基线。<br/>
+FigureNet是由不同模块组成的FigureQA的多步骤算法。第一个模块称为光谱分离器，用于识别图表的元素和颜色。然后是提取模块，该模块量化每个元素表示的值。然后将其与前馈网络一起用于预测答案。FigureNet使用FigureQA图表元素的详细注释对每个模块进行预培训。因为FigureNet依赖于访问每个图表元素的度量值，所以他们只能将其应用于FigureNet的条形图和饼图。</p>
+
+
+<h3 class="group " id="3prefil模型"
+    >3.PReFIL模型<a href="#3prefil%e6%a8%a1%e5%9e%8b"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>我们提出了用于CQA的PReFIL算法。如图3所示，PReFIL有两个平行的Q+I融合分支。每个分支都从40层DenseNet的两个位置获取问题特征（来自LSTM）和图像特征，即低级特征（来自第14层）和高级特征（来自于第40层）。每个Q+I融合块将问题特征连接到卷积特征图的每个元素，然后有一系列1×1卷积来创建问题特定的双模嵌入。这些嵌入被反复聚合，然后被送入预测答案的分类器。尽管PReFIL由相对简单的元素组成，但其性能优于使用RN和注意机制的更复杂方法。</p>
+
+
+<h4 class="group " id="31多阶段图像编码器"
+    >3.1多阶段图像编码器<a href="#31%e5%a4%9a%e9%98%b6%e6%ae%b5%e5%9b%be%e5%83%8f%e7%bc%96%e7%a0%81%e5%99%a8"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>对于所有模型，图像编码器都是经过从头开始培训的DenseNet。DenseNet是训练深度卷积神经网络（CNN）的有效架构。它由几个“dense blocks”和dense blocks之间的“transition blocks”组成。每个dense block有几个卷积层，其中每个层使用前面所有层的输出作为其输入。transition blocks位于两个密集块之间，通过卷积和池来改变特征图大小。这种体系结构鼓励功能重用，改进训练，并减轻逐渐消失的梯度，使培训非常深入的网络变得容易。功能重用允许DenseNet学习复杂的视觉功能，与其他架构相比，参数更少。
+<figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure>
+在深层CNN中，复杂特征作为视觉特征的层次结构来学习，早期层学习简单特征，后期层学习更高级的特征，这些特征是简单特征的组合。在数据可视化中，诸如色块、线条、纹理等简单特征传达的重要信息通常被CNN的深层抽象掉。因此，我们在模型中使用了低卷积和高卷积特征，这两种特征都与使用LSTM学习的问题嵌入一起被送入并行融合模块。</p>
+
+
+<h4 class="group " id="32图像与语言的并行融合"
+    >3.2图像与语言的并行融合<a href="#32%e5%9b%be%e5%83%8f%e4%b8%8e%e8%af%ad%e8%a8%80%e7%9a%84%e5%b9%b6%e8%a1%8c%e8%9e%8d%e5%90%88"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>使用视觉和语言特征联合调整视觉特征可以让模型为下游任务学习更丰富的特征。我们的Q+I融合块首先将所有输入卷积特征图的空间位置与问题特征连接起来，然后使用一系列使用1×1卷积的层进行双模融合。这允许问题调整视觉特征处理，并产生从图像和问题中捕获信息的双模嵌入。这种方法类似于早期的VQA模型，它将CNN嵌入连接到问题嵌入，关键的区别在于这发生在整个场景的空间池之前。我们并行地对低级和高级卷积特征执行此操作。</p>
+
+
+<h4 class="group " id="33双模特征的循环聚合"
+    >3.3双模特征的循环聚合<a href="#33%e5%8f%8c%e6%a8%a1%e7%89%b9%e5%be%81%e7%9a%84%e5%be%aa%e7%8e%af%e8%81%9a%e5%90%88"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>在CNN中，从特征图F中聚合信息的最常用方法∈ RM×N×D是通过平均池或最大池来跨空间维度折叠以生成D维向量。另一种方法是“展平”F，将其转换为DM N维向量。最近关注的方法使用加权和进行了探索，其中每个区域的相对重要性都基于这个问题。这些方法可能无法捕获功能之间的交互，特别是对于诸如问答之类的高级任务。为了解决这个问题，我们使用双向选通递归单元（biGRU）来聚合信息，该单元依次从F中的每个MN位置获取D维特征。聚合的特征被发送到分类器以预测答案。</p>
+
+
+<h4 class="group " id="34dvqa数据集的ocr集成"
+    >3.4DVQA数据集的OCR集成<a href="#34dvqa%e6%95%b0%e6%8d%ae%e9%9b%86%e7%9a%84ocr%e9%9b%86%e6%88%90"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>与FigureQA和大多数VQA任务不同，DVQA需要OCR来回答其推理和数据问题。一个由训练中看到的所有单词组成的固定词汇表是不够的，因为模型在测试过程中会遇到OOV单词。为了将OCR集成到PReFIL中，我们使用与SANDY模型相同的动态编码方案。动态编码创建一个特定于图像的字典，该字典将场景元素的空间位置与字典中的条目相关联。在运行网络之前，使用OCR检测所有单词，然后根据每个单词的空间位置将其与动态编码字典中的相应元素相关联。随后，如果遇到动态词典中的疑问词，则相应的元素设置为1。对于答案，将为动态编码输出保留一部分分类层。<br/>
+为了评估OCR的影响，我们测试了三个OCR版本以及一个未经动态编码训练的算法版本，即，仅使用从列车分割构造的固定词汇表。前两个OCR系统：一个是oracle（完美）OCR模型，另一个是使用Tesseract的真实OCR系统。</p>
+
+
+<h3 class="group " id="4实验和结果"
+    >4.实验和结果<a href="#4%e5%ae%9e%e9%aa%8c%e5%92%8c%e7%bb%93%e6%9e%9c"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+
+
+<h4 class="group " id="41figureqa"
+    >4.1FigureQA<a href="#41figureqa"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>FigureQA有两个验证集和两个非公开可用的测试集。验证1和测试1的颜色与训练集相同，验证2和测试2的颜色方案与训练不同。
+<figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure>
+<figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h4 class="group " id="42dvqa"
+    >4.2DVQA<a href="#42dvqa"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>DVQA分为Test Familifier（测试熟悉）和Test Novel（测试新颖），前者包含带单词的条形图，后者也包含在Train set中遇到的单词。表4给出了两个DVQA分割的结果。
+<figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h4 class="group " id="43消融实验"
+    >4.3消融实验<a href="#43%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>我们通过分析一系列消融实验来研究PReFIL组分的贡献。我们在只有500000个随机选择的训练样本的DVQA子集上对每个模型变体和原始PReFIL（Oracle OCR）进行了25轮的训练。消融模型为：
+<figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h4 class="group " id="44通过提问重建表格"
+    >4.4.通过提问重建表格<a href="#44%e9%80%9a%e8%bf%87%e6%8f%90%e9%97%ae%e9%87%8d%e5%bb%ba%e8%a1%a8%e6%a0%bc"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>作为PReFIL的应用，我们介绍了DVQA的表重建。DVQA的问题模板通过反复询问每个图表的问题，提供了完全重构条形图所需的问题。我们的方法在算法1中给出。重建示例如图4所示，使用PReFIL（Oracle OCR）的结果如表6所示。形状预测可以以近乎完美的精度完成，但标签和值预测的性能都会下降。为了研究图表重建中不同组件的准确性，我们还报告了迭代问答的三个主要组件的准确性：1）形状预测：关于图片中条形和图例数量的问题；2） 标签预测：预测给定条或图例的标签；和3）V值预测：预测给定条的值。
+<figure
+    
+>
+    <picture class="noscript-hidden"><img
+            
+            data-src="&lt;nil&gt;"
+            src="/images/outload.svg"data-data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="%3cnil%3e" target="_blank" rel="noopener noreferrer">
+            <picture><img
+                    src="%3cnil%3e"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h3 class="group " id="5讨论"
+    >5.讨论<a href="#5%e8%ae%a8%e8%ae%ba"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>所有OCR版本在结构问题上都超过了人类基线，但只有使用oracle OCR的PReFIL在所有问题类型上超过了人类。我们发现更好的OCR方法可以为DVQA带来更好的结果。OCR技术的未来发展可能会进一步改善PReFIL。</p>
+
+
+<h3 class="group " id="6结论"
+    >6.结论<a href="#6%e7%bb%93%e8%ae%ba"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>提出了PReFIL这一新的CQA系统，它改进了最先进的技术，并在两个数据集上超越了人类的准确性。与其他VQA任务一样，我们的结果表明需要更难的数据集。对于CQA来说，更好的OCR对于推进该领域也很重要。我们的工作有潜力改进从图表中检索信息，图表有许多应用，包括自动信息检索、表格重建，以及帮助有视觉障碍的人更好地理解图表。</p>
+</section><div class="px-6 pb-5 pt-4 text-center text-xl text-gray-500 md:px-10 md:pb-10 md:pt-14 flex items-center justify-center"><a
+                class="mr-4 inline-flex h-5 w-5 items-center"
+                title="分享到 Twitter"
+                href="https://twitter.com/share?&text=PreFIL%e8%ae%ba%e6%96%87%e8%a7%a3%e8%af%bb&url=http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="eva eva-twitter hover:text-theme"></i
+            ></a><a
+                class="mr-4 inline-flex h-5 w-5 items-center"
+                title="分享到 Facebook"
+                href="https://www.facebook.com/sharer.php?u=http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="eva eva-facebook hover:text-theme"></i
+            ></a><a
+                class="mr-4 inline-flex h-5 w-5 items-center"
+                title="分享到微博"
+                href="https://service.weibo.com/share/share.php?url=http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/&title=%e4%b8%80%e7%a7%8d%e5%a4%9a%e6%a8%a1%e6%80%81%e8%9e%8d%e5%90%88%e6%96%b9%e6%b3%95PreFIL&sudaref=localhost%3a1313"
+                target="_blank"
+                rel="noopener noreferrer"
+            ><svg class="inline-block h-5 w-5 fill-current hover:text-theme" viewBox="0 0 1193 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2681" width="200" height="200"> <path d="M456.991736 557.336482c-107.598583 0-194.644628 74.956316-194.644629 166.838252s87.046045 166.838253 194.644629 166.838253c107.598583 0 194.644628-74.956316 194.644628-166.838253s-87.046045-166.838253-194.644628-166.838252zM391.707202 822.101535c-36.269185 0-66.493506-27.806375-66.493507-62.866588s29.015348-62.866588 66.493507-62.866588c36.269185 0 66.493506 27.806375 66.493506 62.866588S427.976387 822.101535 391.707202 822.101535z m93.090909-91.881936c-14.507674 0-26.597403-12.089728-26.597403-26.597403s12.089728-26.597403 26.597403-26.597403 26.597403 12.089728 26.597403 26.597403-12.089728 26.597403-26.597403 26.597403zM239.376623 281.690673C97.9268 394.125148-18.134593 600.859504 30.224321 661.308146c32.642267 41.105077 59.239669-19.343566 124.524203-89.46399 30.224321-32.642267 77.374262-54.403778 122.106258-90.672964 20.552538-16.92562 197.062574-35.060213 230.913813-35.060212 97.9268-99.135773 114.85242-207.943329 74.956316-258.720189-48.358914-59.239669-201.898465-16.92562-343.348288 94.299882z" p-id="2682" ></path> <path d="M808.802834 560.9634C906.729634 461.827627 911.565525 377.199528 870.460449 326.422668c-47.149941-60.448642-211.570248-32.642267-351.811098 78.583235" p-id="2683" ></path> <path d="M605.695396 353.020071c-14.507674 8.46281-25.38843 12.089728-29.015349 7.253837-1.208973-2.417946-1.208973-6.044864 1.208973-9.671783-16.92562-1.208973-33.85124-1.208973-50.776859-1.208973C235.749705 349.393152 0 500.514758 0 686.696576s235.749705 337.303424 527.112161 337.303424 527.112161-151.121606 527.11216-337.303424c0-170.465171-194.644628-309.497048-448.528925-333.676505zM481.171192 959.924439C275.645809 959.924439 108.807556 847.489965 108.807556 708.458087s166.838253-251.466352 372.363636-251.466351 372.363636 112.434475 372.363637 251.466351-166.838253 251.466352-372.363637 251.466352z" p-id="2684" ></path> <path d="M1021.582054 423.140496c-3.626919 0-6.044864 0-9.671782-1.208973-18.134593-4.835891-29.015348-24.179457-22.970485-42.31405 2.417946-7.253837 3.626919-16.92562 3.626919-29.015348 0-65.284534-53.194805-119.688312-119.688312-119.688312-19.343566 0-33.85124-15.716647-33.851239-33.851239s15.716647-33.85124 33.851239-33.85124c103.971665 0 187.390791 84.628099 187.390791 187.390791 0 18.134593-2.417946 33.85124-6.044864 48.358914-4.835891 14.507674-18.134593 24.179457-32.642267 24.179457z" p-id="2685" ></path> <path d="M1146.106257 473.917355c-2.417946 0-6.044864 0-8.46281-1.208972-20.552538-4.835891-32.642267-25.38843-27.806375-45.940969 6.044864-24.179457 8.46281-47.149941 8.46281-71.329397C1118.299882 201.898465 991.357733 74.956316 836.609209 74.956316c-20.552538 0-37.478158-16.92562-37.478158-37.478158S816.056671 0 836.609209 0c197.062574 0 356.646989 159.584416 356.646989 356.646989 0 29.015348-3.626919 59.239669-10.880755 88.255018-3.626919 18.134593-19.343566 29.015348-36.269186 29.015348z" p-id="2686" ></path> </svg></a><i class="eva eva-copy mr-4 cursor-pointer hover:text-theme" title="复制链接" data-clipboard-text="http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/"></i><div class="group h-5 w-5 relative hidden cursor-pointer sm:inline-block">
+                <i title="二维码" class="eva show-qrcode eva-smartphone hover:text-theme"></i>
+                <div
+                    class="qrcode-wrapper p-2 pointer-events-none absolute left-2/4 bottom-10 h-32 w-32 -translate-x-1/2 overflow-hidden rounded border border-gray-300 bg-white opacity-0 transition duration-300 ease-[ease] group-hover:opacity-100"
+                >
+                    <img class="h-full w-full" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/" alt="二维码" />
+                </div>
+            </div></div>
+<div class="border-b dark:border-darkBorder"></div><div class="flex justify-between px-2 py-4 text-xl md:px-6 md:text-2xl">
+    <div>
+        <a
+            href="/2022/10/06/ssl-vqa.html/"
+            title="SSL VQA"
+            class="invisible flex cursor-pointer items-center text-gray-500 transition duration-300 ease-[ease] hover:text-theme dark:text-darkTextPlaceholder dark:hover:text-darkText"style="visibility: visible;">
+            <span class="flex items-center text-5xl opacity-70 dark:bg-opacity-100">
+                <i class="eva eva-chevron-left-outline"></i>
+            </span>
+            <span>上一篇</span>
+        </a>
+    </div><div class="hidden items-center text-xs xl:flex">
+        除特殊声明外，本博客一律使用以下协议进行授权 「
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" target="_blank" rel="noopener noreferrer" class="text-theme">署名 - 非商业性使用 - 禁止演绎 4.0</a>
+        」
+    </div>
+    <div class="flex items-center text-sm xl:hidden">
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" target="_blank" rel="noopener noreferrer" class="text-theme">
+            <img src="/Cc-by-nc-nd.svg" alt="署名 - 非商业性使用 - 禁止演绎 4.0" title="署名 - 非商业性使用 - 禁止演绎 4.0" class="w-24" />
+        </a>
+    </div>
+
+    <a
+        href=""
+        title=""
+        class="invisible flex cursor-pointer items-center text-gray-500 transition duration-300 ease-[ease] hover:text-theme dark:text-darkTextPlaceholder dark:hover:text-darkText">
+        <span>下一篇</span>
+        <span class="flex items-center text-5xl opacity-70 dark:bg-opacity-100">
+            <i class="eva eva-chevron-right-outline"></i>
+        </span>
+    </a>
+</div>
+<div class="border-t py-6 px-6 md:px-8 dark:border-darkBorder">
+    <script src="https://giscus.app/client.js"
+    data-repo="ecnu-ica22/ecnu-ica22.github.io"
+    data-repo-id="R_kgDOIIrgSA"
+    data-category="Gerernal"
+    data-category-id="DIC_kwDOIIrgSM4CRznI"
+    data-mapping="title"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-CN"
+    data-loading="false"
+    crossorigin="anonymous"
+    data-swup-reload-script
+    async
+>
+</script>
+
+<script data-swup-reload-script>
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onThemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark');
+            }
+        }
+    })();
+    
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+</script>
+</div>
+
+        </div>
+    </div>
+</div>
+</div>
+                </main><footer>
+    <div
+        class="com-footer flex flex-col items-center border-t py-4 px-4 text-sm leading-none text-gray-600 dark:border-darkBorder dark:text-darkTextPlaceholder md:flex-row md:justify-between"
+    >
+        <div class="mb-2 flex items-center justify-between text-center md:mb-0">
+            <span class="">© 2022 - 2022</span>
+            <span class="mx-1.5 opacity-50"> | </span>由 <a data-no-swup class="mx-1 font-bold hover:text-theme" href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> <span class="text-xs opacity-70">❤</span> <a data-no-swup class="mx-1 font-bold hover:text-theme" href="https://github.com/Ice-Hazymoon/hugo-theme-luna" target="_blank" rel="noopener noreferrer">Luna</a> 驱动</div>
+
+        <div class="flex items-center"><span class="noscript-hidden mx-1.5 hidden opacity-50 md:block"> | </span><a data-no-swup href="http://localhost:1313/index.xml" target="_blank" class="mr-1.5 hover:text-theme">
+                    <span class=" md:hidden lg:inline"><svg t="1650887361919" class="mr-0.5 w-96 w-3 fill-current text-inherit inline-block align-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3091"><path d="M320.16155 831.918c0 70.738-57.344 128.082-128.082 128.082S63.99955 902.656 63.99955 831.918s57.344-128.082 128.082-128.082 128.08 57.346 128.08 128.082z m351.32 94.5c-16.708-309.2-264.37-557.174-573.9-573.9C79.31155 351.53 63.99955 366.21 63.99955 384.506v96.138c0 16.83 12.98 30.944 29.774 32.036 223.664 14.568 402.946 193.404 417.544 417.544 1.094 16.794 15.208 29.774 32.036 29.774h96.138c18.298 0.002 32.978-15.31 31.99-33.58z m288.498 0.576C943.19155 459.354 566.92955 80.89 97.00555 64.02 78.94555 63.372 63.99955 77.962 63.99955 96.032v96.136c0 17.25 13.67 31.29 30.906 31.998 382.358 15.678 689.254 322.632 704.93 704.93 0.706 17.236 14.746 30.906 31.998 30.906h96.136c18.068-0.002 32.658-14.948 32.01-33.008z" p-id="3092"></path></svg></span>
+                    <span>RSS</span>
+                </a><a data-no-swup href="http://localhost:1313/sitemap.xml" target="_blank" class="mr-1.5 hover:text-theme">
+                    <span class=" md:hidden lg:inline"><svg t="1650887940556" class="mr-0.5 w-3 fill-current text-inherit inline-block align-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6291"><path d="M950.044 625.778h-68.266v-56.89c0-45.51-39.822-85.332-85.334-85.332h-256v-85.334h68.267c39.822 0 73.956-34.133 73.956-73.955V130.844c0-39.822-34.134-73.955-73.956-73.955H415.29c-39.822 0-73.956 34.133-73.956 73.955v193.423c0 39.822 34.134 73.955 73.956 73.955h68.267v85.334h-256c-45.512 0-85.334 39.822-85.334 85.333v56.889H73.956C34.133 625.778 0 659.91 0 699.733v193.423c0 39.822 34.133 73.955 73.956 73.955h193.422c39.822 0 73.955-34.133 73.955-73.955V699.733c0-39.822-34.133-73.955-73.955-73.955H199.11v-56.89c0-17.066 11.378-28.444 28.445-28.444h568.888c17.067 0 28.445 11.378 28.445 28.445v56.889h-68.267c-39.822 0-73.955 34.133-73.955 73.955v193.423c0 39.822 34.133 73.955 73.955 73.955h193.422c39.823 0 73.956-34.133 73.956-73.955V699.733c0-39.822-34.133-73.955-73.956-73.955z" p-id="6292"></path></svg></span>
+                    <span>Sitemap</span>
+                </a><div id="google_translate_element" class="overflow-hidden rounded border dark:border-darkBorder"></div></div><div id="run-time" class="mt-2 flex-grow text-right md:mt-0">
+    <span>运行时间： </span><b id="run-time-d">0</b>
+    <span class="text-xs">天</span>
+    <b id="run-time-h">0</b>
+    <span class="text-xs">小时</span>
+    <b id="run-time-m">0</b>
+    <span class="text-xs">分钟</span>
+    <b id="run-time-s">0</b>
+    <span class="text-xs">秒</span>
+</div>
+</div>
+
+    <script type="text/javascript">
+window.__theme = {
+    cdn: '',
+    pjax: true ,
+    isServer: true ,
+    $version:"",
+    lang: 'zh-cn',
+    imageZoom: true ,
+    lazyload: true ,
+    bionicReading: {
+        enabled: true ,
+        skipLinks: false ,
+        autoBionic: false ,
+        excludeWords:[],
+        excludeClasses:["github"],
+        excludeNodeNames:[],
+    },
+    katex: true ,
+    search: true ,
+    backtop: true ,
+    pangu: true ,
+    autoDarkMode: true ,
+    googleAnalytics:false,
+    hugoEncrypt: {
+        wrongPasswordText: '密码错误',
+        userStorage:window['sessionStorage'],
+    },
+    console: {
+        enabled: true ,
+        leftColor: '#dd6065',
+        rightColor: '#feb462',
+        leftText: 'ECNU ICA-LK',
+        rightText: 'Powered by Hugo Luna',
+    },
+    assets: {
+        error_svg: "\/images\/error.svg",
+        search_svg: "\/images\/search.svg",
+    },
+    i18n: {
+        copy: {
+            success: "复制成功",
+            failed: "复制失败，请手动复制",
+            copyCode: "复制代码",
+        },
+        search: {
+            untitled: "无标题",
+            loadFailure: "初始化搜索引擎失败",
+            input: "请输入内容...",
+        },
+        darkMode: {
+            dark: "切换到夜间模式",
+            light: "切换到日间模式"
+        }
+    },creatTime: "2022\/10\/01"}
+</script>
+<script type="text/javascript" src="/ts/main.js" defer></script><script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('\/sw.js');
+        });
+    }
+</script>
+<script type="text/javascript" src="/translate-google.js" defer></script><script type="text/javascript">
+    window.translateelement_styles = "\/sass\/translateelement.min.c65796c6c3e4d48c75f72776948be83c5c448d1c5cc466b996b00657c558d28a.css";
+    function googleTranslateElementInit(){
+        new google.translate.TranslateElement({
+            pageLanguage: 'zh-cn',
+            includedLanguages: 'af,ga,sq,it,ar,ja,az,kn,eu,ko,bn,la,be,lv,bg,lt,ca,mk,zh-CN,ms,zh-TW,mt,hr,no,cs,fa,da,pl,nl,pt,en,ro,eo,ru,et,sr,tl,sk,fi,sl,fr,es,gl,sw,ka,sv,de,ta,el,te,gu,th,ht,tr,iw,uk,hi,ur,hu,vi,is,cy,id,yi',
+            autoDisplay:false
+        },'google_translate_element');
+    }
+</script>
+
+
+
+
+
+<script>
+    
+    
+</script>
+
+<script data-swup-reload-script>
+    
+    
+</script>
+</footer>
+</div>
+        </div><a
+        href="#nav"
+        title="返回顶部"
+        id="back-top"
+        class="fixed right-6 bottom-9 z-10 translate-y-3 scale-90 cursor-pointer rounded-full bg-white opacity-0 transition duration-300 ease-[ease] dark:bg-darkBgAccent sm:scale-100"
+    >
+        <div class="relative">
+            <div class="absolute left-0 top-0 flex h-full w-full items-center justify-center text-xl">
+                <i class="eva eva-arrow-upward-outline"></i>
+            </div>
+            <svg id="svg" width="54" height="54" viewBox="0 0 54 54" preserveAspectRatio="xMinYMin meet">
+                <circle
+                    transform="rotate(-90, 27 , 27)"
+                    style="stroke-dasharray: 157, 157; stroke-dashoffset: 157;"
+                    cx="27"
+                    cy="27"
+                    r="25"
+                    fill="none"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke="var(--theme)"
+                />
+            </svg>
+        </div>
+    </a><noscript>
+    <style>
+        .dark-mode-switch,
+        #run-time,
+        #bionicReading,
+        .noscript-hidden,
+        [data-clipboard-text],
+        [data-lazyload] {
+            display: none;
+        }
+        #back-top {
+            opacity: 1;
+        }
+        .noscript-show {
+            display: initial;
+        }
+    </style>
+</noscript>
+</body>
+</html>
