@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -23,12 +23,12 @@
                 />
   </url><url>
     <loc>http://localhost:1313/categories/deeplearning/</loc>
-    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -48,7 +48,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -68,7 +68,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -88,7 +88,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/vqa/</loc>
-    <lastmod>2022-10-13T10:58:19+08:00</lastmod>
+    <lastmod>2022-10-13T10:59:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
