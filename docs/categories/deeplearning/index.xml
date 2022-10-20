@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>DeepLearning on ECNU ICA-LK</title>
+    <title>DeepLearning on ECNU ICA-702</title>
     <link>http://localhost:1313/categories/deeplearning/</link>
-    <description>Recent content in DeepLearning on ECNU ICA-LK</description>
+    <description>Recent content in DeepLearning on ECNU ICA-702</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 13 Oct 2022 10:34:49 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/deeplearning/index.xml" rel="self" type="application/rss+xml" />

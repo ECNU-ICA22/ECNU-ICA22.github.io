@@ -4,9 +4,9 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/en-us/",
-    "name": "ECNU ICA-LK",
+    "name": "ECNU ICA-702",
     "short_name": "ECNU-ICA",
-    "description": "ECNU ICA-LK",
+    "description": "ECNU ICA-702",
     "icons": [
         {
             "src": "/icon_huf0db5a14d812258b8c55135f192e7308_2933_192x192_resize_catmullrom_3.png",

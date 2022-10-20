@@ -6,7 +6,7 @@ languageCode: zh-cn
 defaultContentLanguage: zh-cn
 # languageCode: en-us
 # defaultContentLanguage: en-us
-title: "ECNU ICA-LK"
+title: "ECNU ICA-702"
 enableRobotsTXT: true
 enableEmoji: true
 theme: hugo-theme-luna
@@ -444,7 +444,7 @@ params:
   keywords:
     - ECNU
     - ICA
-    - ICA-LK
+    - ICA-702
   description: "A simple, performance-first, SEO-friendly Hugo theme"
 
 build:
