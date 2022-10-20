@@ -6,7 +6,7 @@ languageCode: zh-cn
 defaultContentLanguage: zh-cn
 # languageCode: en-us
 # defaultContentLanguage: en-us
-title: "ECNU ICA-702"
+title: "ECNU ICALK 702"
 enableRobotsTXT: true
 enableEmoji: true
 theme: hugo-theme-luna
@@ -248,7 +248,7 @@ params:
   console:
     enabled: true
     leftColor: "#dd6065"
-    leftText: "ECNU ICA-702"
+    leftText: "ECNU ICALK 702"
     rightColor: "#feb462"
     rightText: "Powered by Hugo Luna"
 
