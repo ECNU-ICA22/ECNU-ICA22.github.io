@@ -333,7 +333,7 @@ params:
     imageProcessing: true
   
   weibo:
-    rsshub: "https://rsshub.app"
+    rsshub: "https://rsshub.rssforever.com" # "https://rsshub.app"
     id: "1688511087" # weibo ID
     imageProcessing: true
 
