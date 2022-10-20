@@ -1,7 +1,8 @@
+param($a)
 git add .
-git commit -m '$0'
+git commit -m '$a'
 git push origin main
-cd content
+cd contents
 git add .
-git commit -m '$0'
+git commit -m '$a'
 git push origin main
