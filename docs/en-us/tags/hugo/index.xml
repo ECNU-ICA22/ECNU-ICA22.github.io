@@ -16,14 +16,5 @@
       <description>Some shortcode examples</description>
     </item>
     
-    <item>
-      <title>Article Encryption Test</title>
-      <link>http://localhost:1313/en-us/2022/10/01/hugo-encrypt.html/</link>
-      <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
-      
-      <guid>http://localhost:1313/en-us/2022/10/01/hugo-encrypt.html/</guid>
-      <description>This is a test article for encryption</description>
-    </item>
-    
   </channel>
 </rss>

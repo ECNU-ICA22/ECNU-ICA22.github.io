@@ -248,7 +248,7 @@ params:
   console:
     enabled: true
     leftColor: "#dd6065"
-    leftText: "ECNU ICA-LK"
+    leftText: "ECNU ICA-702"
     rightColor: "#feb462"
     rightText: "Powered by Hugo Luna"
 

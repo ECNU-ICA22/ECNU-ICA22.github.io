@@ -8,13 +8,13 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/"
+                hreflang="zh-cn"
+                href="http://localhost:1313/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -28,13 +28,13 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/posts/"
+                hreflang="zh-cn"
+                href="http://localhost:1313/posts/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/posts/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/posts/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -48,13 +48,13 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/tags/"
+                hreflang="zh-cn"
+                href="http://localhost:1313/tags/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/tags/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/tags/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -71,21 +71,6 @@
     <lastmod>2022-09-30T10:06:03+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/2022/10/01/typography.html/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/2022/10/01/typography.html/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="http://localhost:1313/ja/2022/06/15/typography.html/"
-                />
   </url><url>
     <loc>http://localhost:1313/ja/archives/</loc>
     <lastmod>2022-09-30T10:06:03+08:00</lastmod>
@@ -112,13 +97,13 @@
     <priority>0.5</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="en-us"
-                href="http://localhost:1313/en-us/categories/"
+                hreflang="zh-cn"
+                href="http://localhost:1313/categories/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="zh-cn"
-                href="http://localhost:1313/categories/"
+                hreflang="en-us"
+                href="http://localhost:1313/en-us/categories/"
                 />
     <xhtml:link
                 rel="alternate"
