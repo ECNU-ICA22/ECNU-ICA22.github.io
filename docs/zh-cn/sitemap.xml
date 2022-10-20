@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -23,12 +23,12 @@
                 />
   </url><url>
     <loc>http://localhost:1313/categories/deeplearning/</loc>
-    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -47,8 +47,13 @@
                 href="http://localhost:1313/"
                 />
   </url><url>
+    <loc>http://localhost:1313/tags/layout/</loc>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -68,7 +73,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -86,6 +91,11 @@
                 hreflang="zh-cn"
                 href="http://localhost:1313/tags/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/2022/10/20/%E4%B8%8D%E9%9C%80%E8%A6%81ocr%E7%9A%84%E6%96%87%E6%A1%A3%E7%90%86%E8%A7%A3transformerdonut.html/</loc>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/vqa/</loc>
     <lastmod>2022-10-20T10:44:16+08:00</lastmod>
