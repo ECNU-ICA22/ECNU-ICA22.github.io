@@ -263,7 +263,7 @@ params:
   # 网站字体
   # Site font
   # font: '"Times New Roman", Times, "Heti Song", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
-  font: 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif'
+  font: 'stheiti, MingLiU, "Times New Roman", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif'
 
   # 自定义脚本
   # ts/custom.ts
@@ -456,7 +456,8 @@ languages:
     languageName: 中文
     params:
       languageIcon: "images/i18n/zh-cn.svg" # in assets folder
-      font: "Times New Roman,Times,Heti Song,serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol"
+      # font: "Times New Roman,Times,Heti Song,serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol"
+      font: "microsoft jhenghei,Times New Roman,Times,serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol"
       twitter: 
         rsshub: "https://rsshub.rssforever.com"
         id: ""
