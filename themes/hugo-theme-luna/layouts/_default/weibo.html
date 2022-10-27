@@ -26,7 +26,7 @@
             
             <div id="weibo">
                 {{- if $weiboConfig.id -}}
-                {{- $weiboData := getJSON (print "https://api.rss2json.com/v1/api.json?rss_url=" $weiboConfig.rsshub "/weibo/user/" $weiboConfig.id ) -}}
+                {{- $weiboData := getJSON (print "https://api.rss2json.com/v1/api.json?rss_url=" $weiboConfig.rsshub "/weibo/user/" $weiboConfig.id "/routeParams=1" ) -}}
                     {{- range(index $weiboData "items")}}
 
                         {{- $pubDate := dateFormat (T "date.d_m_h_s") .pubDate -}}

@@ -8,7 +8,11 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
+<<<<<<< HEAD
     <lastmod>2022-10-20T12:43:04+08:00</lastmod>
+=======
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+>>>>>>> 325abd3b511f23edc3cb7ee6c15b9c37248a4d34
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -28,12 +32,20 @@
                 />
   </url><url>
     <loc>http://localhost:1313/categories/deeplearning/</loc>
+<<<<<<< HEAD
     <lastmod>2022-10-20T12:43:04+08:00</lastmod>
+=======
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+>>>>>>> 325abd3b511f23edc3cb7ee6c15b9c37248a4d34
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/</loc>
+<<<<<<< HEAD
     <lastmod>2022-10-25T15:57:18+08:00</lastmod>
+=======
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+>>>>>>> 325abd3b511f23edc3cb7ee6c15b9c37248a4d34
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -53,12 +65,20 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/layout/</loc>
+<<<<<<< HEAD
     <lastmod>2022-10-20T12:43:04+08:00</lastmod>
+=======
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+>>>>>>> 325abd3b511f23edc3cb7ee6c15b9c37248a4d34
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
+<<<<<<< HEAD
     <lastmod>2022-10-25T15:57:18+08:00</lastmod>
+=======
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+>>>>>>> 325abd3b511f23edc3cb7ee6c15b9c37248a4d34
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -78,7 +98,11 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+<<<<<<< HEAD
     <lastmod>2022-10-20T12:43:04+08:00</lastmod>
+=======
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
+>>>>>>> 325abd3b511f23edc3cb7ee6c15b9c37248a4d34
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -98,22 +122,22 @@
                 />
   </url><url>
     <loc>http://localhost:1313/2022/10/20/%E4%B8%8D%E9%9C%80%E8%A6%81ocr%E7%9A%84%E6%96%87%E6%A1%A3%E7%90%86%E8%A7%A3transformerdonut.html/</loc>
-    <lastmod>2022-10-20T12:43:04+08:00</lastmod>
+    <lastmod>2022-10-20T12:56:23+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/vqa/</loc>
-    <lastmod>2022-10-13T12:14:04+08:00</lastmod>
+    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/2022/10/13/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/</loc>
-    <lastmod>2022-10-13T12:14:04+08:00</lastmod>
+    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/2022/10/06/ssl-vqa.html/</loc>
-    <lastmod>2022-10-06T17:52:22+08:00</lastmod>
+    <lastmod>2022-10-20T10:44:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -188,7 +212,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/about/</loc>
-    <lastmod>2022-10-20T12:23:18+08:00</lastmod>
+    <lastmod>2022-10-20T11:52:06+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
