@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2022-10-20T12:18:54+08:00</lastmod>
+    <lastmod>2022-10-20T12:43:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -23,12 +23,12 @@
                 />
   </url><url>
     <loc>http://localhost:1313/categories/deeplearning/</loc>
-    <lastmod>2022-10-20T12:18:54+08:00</lastmod>
+    <lastmod>2022-10-20T12:43:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2022-10-20T12:18:54+08:00</lastmod>
+    <lastmod>2022-10-25T15:57:18+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -48,12 +48,12 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/layout/</loc>
-    <lastmod>2022-10-20T12:18:54+08:00</lastmod>
+    <lastmod>2022-10-20T12:43:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2022-10-20T12:18:54+08:00</lastmod>
+    <lastmod>2022-10-25T15:57:18+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -73,7 +73,7 @@
                 />
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2022-10-20T12:18:54+08:00</lastmod>
+    <lastmod>2022-10-20T12:43:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
     <xhtml:link
@@ -236,5 +236,10 @@
                 hreflang="zh-cn"
                 href="http://localhost:1313/links/"
                 />
+  </url><url>
+    <loc>http://localhost:1313/1/01/01/.html/</loc>
+    <lastmod>2022-10-25T15:57:18+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

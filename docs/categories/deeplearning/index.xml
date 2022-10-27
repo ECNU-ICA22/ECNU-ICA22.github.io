@@ -8,11 +8,11 @@
     <language>zh-cn</language>
     <lastBuildDate>Thu, 20 Oct 2022 10:34:49 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/deeplearning/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>一种多模态融合方法PreFIL</title>
-      <link>http://localhost:1313/2022/10/20/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/</link>
+      <title>不需要OCR的文档理解Transformer：Donut</title>
+      <link>http://localhost:1313/2022/10/20/%E4%B8%8D%E9%9C%80%E8%A6%81ocr%E7%9A%84%E6%96%87%E6%A1%A3%E7%90%86%E8%A7%A3transformerdonut.html/</link>
       <pubDate>Thu, 20 Oct 2022 10:34:49 +0800</pubDate>
       
-      <guid>http://localhost:1313/2022/10/20/%E4%B8%80%E7%A7%8D%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%96%B9%E6%B3%95prefil.html/</guid>
+      <guid>http://localhost:1313/2022/10/20/%E4%B8%8D%E9%9C%80%E8%A6%81ocr%E7%9A%84%E6%96%87%E6%A1%A3%E7%90%86%E8%A7%A3transformerdonut.html/</guid>
       <description>Donut论文解读</description>
     </item>
     

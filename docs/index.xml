@@ -431,5 +431,655 @@ FigureNet是由不同模块组成的FigureQA的多步骤算法。第一个模块
 
 &lt;/div&gt;
 
+</description></item><item>
+            <title></title>
+            <link>http://localhost:1313/1/01/01/.html/</link>
+            <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+            <guid>http://localhost:1313/1/01/01/.html/</guid><description>
+
+&lt;h1 class=&#34;group &#34; id=&#34;chartqa-a-benchmark-for-question-answering-about-charts-with-visual-and-logical-reasoning&#34;
+    &gt;ChartQA: A Benchmark for Question Answering about Charts with Visual and Logical Reasoning&lt;a href=&#34;#chartqa-a-benchmark-for-question-answering-about-charts-with-visual-and-logical-reasoning&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h1&gt;
+
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;abstract&#34;
+    &gt;Abstract&lt;a href=&#34;#abstract&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+&lt;p&gt;Charts are very popular for analyzing data. When exploring charts, people often ask a variety of complex reasoning questions that involve several logical and arithmetic operations. They also commonly refer to visual features of a chart in their questions. However, most existing datasets do not focus on such complex reasoning questions as their questions are template-based and answers come from a fifixed-vocabulary. In this work, we present a large-scale benchmark covering 9.6K human-written questions as well as 23.1K questions generated from human-written chart summaries. To address the unique challenges in our benchmark involving visual and logical reasoning over charts, we present two transformer-based models that combine visual features and the data table of the chart in a unified way to answer questions. While our models achieve the state-of-the-art results on the previous datasets as well as on our benchmark, the evaluation also reveals several challenges in answering complex reasoning questions.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;背景：&lt;strong&gt;图表问答会涉及到&lt;/strong&gt;复杂的推理问题&lt;/strong&gt;，包含很多逻辑和数学操作；提问的时候往往会在问题中提到&lt;strong&gt;图表中的视觉特征&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;**现状：**而大部分现存数据集没有聚焦这样复杂的推理问题，且大部分问题的答案都来自于固定词库。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;本文工作1：&lt;strong&gt;本文提出了一个&lt;/strong&gt;大型的基准数据集&lt;/strong&gt;，包含了9600个人类提出的问题和23100个从人类写的图表总结中生成的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;本文工作2：&lt;strong&gt;提出了两个&lt;/strong&gt;基于transforme&lt;/strong&gt;r的模型，结合了&lt;strong&gt;视觉特征&lt;/strong&gt;和从图表中抽取出来的&lt;strong&gt;表格结构&lt;/strong&gt;来以一种统一的方式来回答问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;**模型效果：**本文模型在之前的一些数据集上都达到了sota的效果，在本文数据集上也达到 了sota的效果，评价结果也表明在回答复杂推理问题方面仍然存在一些挑战。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;1introduction&#34;
+    &gt;1.Introduction&lt;a href=&#34;#1introduction&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+&lt;p&gt;**研究背景：**图表应用广泛，分析数据的时候会针对图表提出一些复杂的推理问题，涉及到算术和逻辑操作。回答这些问题需要大量的感知和认知方面的努力，因为需要将多个操作结合起来才能得到答案，例如检索数值、比较值，找到最大值、计算和差等操作。&lt;strong&gt;例如&lt;/strong&gt;图1中的问题Q1需要用户计算两条线之间的每年的差值，并找到差值最大的一年。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;研究内容：&lt;/strong&gt; &lt;strong&gt;图表问答任务&lt;/strong&gt;就是以&lt;strong&gt;一张图表&lt;/strong&gt;和&lt;strong&gt;一个自然语言问题&lt;/strong&gt;作为输入，预测出问题的答案。&lt;/p&gt;
+&lt;p&gt;图表问答任务跟其他QA任务（文本QA和表格QA）不一样，图表问答的输入是一个数据的视觉表示形式，这样的形式可以让读者的注意力都被数据一些突出的特征吸引，例如趋势和异常值。除此之外人们问问题的时候还喜欢通过引用视觉符号的一些特性来提问，&lt;strong&gt;例如&lt;/strong&gt;图1中Q2引用了线的颜色来提问图表中这条线的最高点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;现存图表问答数据集的不足之处：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	1.问题是用预定义好的模板生成的，缺乏自然语言的特性。&lt;/p&gt;
+&lt;p&gt;​	2.图表是用程序工具（例如Matplotlib）自动生成的，缺乏来自真实世界的表格的风格多样性。&lt;/p&gt;
+&lt;p&gt;​	3.大多数数据集的&lt;strong&gt;答案来自一个小的固定的词库&lt;/strong&gt;（例如图表轴标签、yes、no这些），忽略了很多复杂的推理问题，推理问题的答案是通过各种各样的数学操作（例如求和、比较）得到的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;现存图表问答方法的局限性：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;方法1：&lt;strong&gt;因为大部分数据集只有答案是在固定词库上的问题，现存模型通常把这样的问题作为一个&lt;/strong&gt;分类问题&lt;/strong&gt;来处理，并且依赖于对问题和答案的动态编码技术，问题和答案中的词被编码成图表元素的空间位置的形式（例如x轴标签1）。这样的方法在&lt;strong&gt;OCR模型结果错误&lt;/strong&gt;的时候或者&lt;strong&gt;用图表元素名称的同义词提问&lt;/strong&gt;（例如US和United States）的时候就不管用了。&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;方法2：&lt;strong&gt;PlotQA尝试用&lt;/strong&gt;表格问答模型&lt;/strong&gt;来回答开放词库的问题，但是他在回答视觉推理问题时没有考虑任何图表的&lt;strong&gt;视觉特征&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;本文提出了一个大型benchmark数据集。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;包含9608个人工提问的问题（主要是&lt;strong&gt;逻辑和视觉推理&lt;/strong&gt;的问题），用T5模型从人类写的图表总结中自动生成了另外23111个问题（手工验证了部分问题以确保问题质量），用这样的方式自动得到了&lt;strong&gt;大量&lt;/strong&gt;问题，且这些问题&lt;strong&gt;语言变化性都很丰富&lt;/strong&gt;，因为是用人写的图表总结生成的问题。&lt;/p&gt;
+&lt;p&gt;包含20882张图表图片，是从4个不同的网站上收集到的，以确保图表&lt;strong&gt;风格和话题的多样性&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;本文提出了一个将图表的表格结构和视觉特征结合起来的方法。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1.先用改进后的ChartOCR模型抽取出图表的基本数据表格。&lt;/p&gt;
+&lt;p&gt;2.同时用神经网络模型抽取出图表图片的视觉特征。&lt;/p&gt;
+&lt;p&gt;3.改进了两个基于transformer的QA模型，同时利用了图表的表格结构和视觉特征，来预测出答案。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;主要是针对本文数据集的挑战提出的，由于很多问题都涉及到了很&lt;strong&gt;复杂的推理&lt;/strong&gt;和图表的&lt;strong&gt;视觉特征引用&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;本文提出的模型在之前的数据集和本文提出的数据集上达到了sota的效果，或是跟之前的方法达到了同样的水平。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;本文贡献：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1.提出了一个大型图表问答数据集，有真实世界的图表和人工标注的问答对；&lt;/p&gt;
+&lt;p&gt;2.一个框架方法，通过结合图表的表格结构和视觉特征，用到基于transformer的QA模型中去，最终达到了sota的效果。&lt;/p&gt;
+&lt;p&gt;3.对本文模型进行扩展分析及效果评估。&lt;/p&gt;
+&lt;p&gt;代码和数据集公布在&lt;a
+    class=&#34;link&#34;
+    href=&#34;https://github.com/vis-nlp/ChartQA&#34;title=&#34;github&#34;target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a
+&gt;
+上。&lt;/p&gt;
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;2related-work&#34;
+    &gt;2.Related Work&lt;a href=&#34;#2related-work&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;21现存数据集&#34;
+    &gt;2.1现存数据集&lt;a href=&#34;#21%e7%8e%b0%e5%ad%98%e6%95%b0%e6%8d%ae%e9%9b%86&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;ChartQA和之前的数据集存在两个方面的区别：①问题类型（人工提出的vs基于模板的）；②图表来源（源自真实世界vs用工具生成的）。数据集对比见表1。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;早期数据集&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;①FigureQA、②DVQA、③LEAF-QA、④LEAF-QA++&lt;/p&gt;
+&lt;p&gt;特点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;问题都是用较少的模板生成出来的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;问题的答案都来自一个较小的固定的词库（例如yes、no）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;图表都是用同样的软件自动生成的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;PlotQA&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;是唯一一个有开放词库问题的数据集，这样的问题需要对基本图表数据进行聚合操作。&lt;/p&gt;
+&lt;p&gt;缺陷：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;没有视觉推理相关的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;问题是用模板生成的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;图表是用一个软件绘制的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Kim et al(2020)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;用一个&lt;strong&gt;很小&lt;/strong&gt;的人工标注的数据集做了一个可解释性研究，这个数据集只有 52张图表和629个问答对用于理解人们怎么对图表进行提问并得出答案。&lt;/p&gt;
+&lt;p&gt;结论：目前没有包含了&lt;strong&gt;人工标注的视觉和逻辑推理问题&lt;/strong&gt;且&lt;strong&gt;图表图片来自真实世界&lt;/strong&gt;的大型的图表问答数据集，因此本文提出了ChartQA数据集。&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;22-现存模型&#34;
+    &gt;2.2 现存模型&lt;a href=&#34;#22-%e7%8e%b0%e5%ad%98%e6%a8%a1%e5%9e%8b&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;现在解决CQA问题主要有两种方法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第一种方法&lt;/strong&gt;是基于VQA模型的&lt;strong&gt;分类方法&lt;/strong&gt;，这样只能处理固定词库的问题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;用encoder对问题和图表图片进行编码。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;用注意力机制将问题和图表的特征结合在一起。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将结合后的特征送到分类器里去做分类任务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这些模型大部分都用到了&lt;strong&gt;动态编码技术&lt;/strong&gt;，将问题编码成图表中文本元素的位置信息的形式，但是这样很容易受到OCR噪声的干扰。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第二种方法&lt;/strong&gt;用了&lt;strong&gt;表格问答&lt;/strong&gt;方法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;要么就是假设图表的数据表格已经给出。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;要么就是从图表图片中用视觉技术抽取出表格结构来。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;23-图表数据抽取&#34;
+    &gt;2.3 图表数据抽取&lt;a href=&#34;#23-%e5%9b%be%e8%a1%a8%e6%95%b0%e6%8d%ae%e6%8a%bd%e5%8f%96&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;早期图表数据抽取方法&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;提出过一种&lt;strong&gt;半自动系统&lt;/strong&gt;来从图表图片中抽取出数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;提出过一种全自动的图表数据抽取流程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这些方法都依靠不同的启发式方法，这放在很多真实世界的图表上没啥用且效果有限。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Luo et al. (2021)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;提出了一种图表数据抽取方法从真实世界的图表中以较高的准确率抽取了数据，但是这个模型还是只预测了图表中符号元素的&lt;strong&gt;原始数据值&lt;/strong&gt;，没有将这些值跟对应的轴或者图例关联起来形成表格数据。&lt;/p&gt;
+&lt;p&gt;本文扩展了ChartOCR的模型抽取了&lt;strong&gt;完整的表格结构的数据&lt;/strong&gt;将其送到本文模型中去。&lt;/p&gt;
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;3chartqa-datasets&#34;
+    &gt;3.ChartQA Datasets&lt;a href=&#34;#3chartqa-datasets&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;31-数据收集和准备工作&#34;
+    &gt;3.1 数据收集和准备工作&lt;a href=&#34;#31-%e6%95%b0%e6%8d%ae%e6%94%b6%e9%9b%86%e5%92%8c%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;图表来源：4个网站（为确保数据集的图表&lt;strong&gt;风格&lt;/strong&gt;和&lt;strong&gt;话题&lt;/strong&gt;多样性）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;**Statista：**话题包括经济、政治、工业等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;**The Pew research：**涵盖了很多关于社会和经济事件、人口趋势统计、公共选择的报告，这些报告里囊括了各种各样的图表。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Our World In Data（OWID）&lt;/strong&gt;：关于各种全球事务例如经济、金融、社会的图表。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;**Organisation for Economic Co-operation and Development（OECD）：**关于政策制定的报告和数据分析。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对于Pew网站，只爬取了&lt;strong&gt;图表图片&lt;/strong&gt;，因为其没有对应的数据表格。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;其他三个网站抽取了&lt;/p&gt;
+&lt;p&gt;①基本数据表格&lt;/p&gt;
+&lt;p&gt;②元数据（例如标题、图表类型）&lt;/p&gt;
+&lt;p&gt;③SVG文件以&lt;/p&gt;
+&lt;p&gt;④相关的文本描述&lt;/p&gt;
+&lt;p&gt;最后从SVG文件中抽取出不同图表元素的标注框信息（例如x轴标签），用于训练数据表格抽取模型（ChartOCR）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;32-数据标注&#34;
+    &gt;3.2 数据标注&lt;a href=&#34;#32-%e6%95%b0%e6%8d%ae%e6%a0%87%e6%b3%a8&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;两个标注步骤：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;①找人为图表提问并给出答案，用Amazon Mechanical Turk（AMT）；&lt;/p&gt;
+&lt;p&gt;②用从statista上抽取出来的&lt;strong&gt;人写的总结&lt;/strong&gt;中生成问答对。&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;321-人工提问并标注答案&#34;
+    &gt;3.2.1 人工提问并标注答案&lt;a href=&#34;#321-%e4%ba%ba%e5%b7%a5%e6%8f%90%e9%97%ae%e5%b9%b6%e6%a0%87%e6%b3%a8%e7%ad%94%e6%a1%88&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;设计了AMT任务，找人对图表进行提问并给出答案。&lt;/p&gt;
+&lt;p&gt;主要关注两种类型的问题，复合问题和视觉问题。&lt;/p&gt;
+&lt;p&gt;**复合问题：**包含至少两种数学或逻辑的操作，例如求和、求差、求平均等。&lt;/p&gt;
+&lt;p&gt;**视觉问题：**需要在提问时通过图形元素的一些视觉特征（例如颜色、高度、长度等）来引用这些视觉元素（例如柱形）。&lt;/p&gt;
+&lt;p&gt;原因：主要关注这两种类型的问题是因为，①人们更倾向于这样去提问；②之前的数据集大都没有涉及到过这么复杂的视觉和逻辑推理问题。&lt;/p&gt;
+&lt;p&gt;标注细节：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;对每一个图表，标注员会提供两个带答案的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;同样的问题之后会被另一个标注员回答一次。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果两个众包员的答案是一致的，我们就认为答案是正确的；否则我们会手工核对这个答案以得到最终的正确答案。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;基于精准匹配的标注员之间的匹配率是61.04%。&lt;/p&gt;
+&lt;p&gt;问题：这样的精准匹配没有考虑到同一个词可能有不同的书写形式，或是数字的精确程度不同（例如3$ vs 3 dollars，86.33 vs 86.3）。这些都是在人工标注是很容易出现的问题。&lt;/p&gt;
+&lt;p&gt;解决办法：因此在500个随机样本上手工调整了这些问题，然后发现考虑了不同的书写形式和数字精度之后发现准确率更高了，达到了78.55%。&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;322-数据集增强&#34;
+    &gt;3.2.2 数据集增强&lt;a href=&#34;#322-%e6%95%b0%e6%8d%ae%e9%9b%86%e5%a2%9e%e5%bc%ba&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;之前的QA（例如visua QA、textual QA）的数据增强&lt;/strong&gt;，主要有2种方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;通过基于模板的方法。
+基于模板的问题通常缺乏语言上的变化性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过机器生成问题。
+大型语言模型（例如T5），在大量来自不同网站的数据训练过，能学到一般的语言特性和变化。因此本文选择用T5来做数据增强。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;本文数据增强&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;本文微调了一个在SQuAD QA数据集上预训练过的T5模型。用了从Statista上表格带的人类写的图表总结来自动生成问题，生成出来的问题在词汇和句法的变化性方面都足够了，很像人类提出的问题。&lt;/p&gt;
+&lt;p&gt;这个过程包括训练和应用了2个T5模型：一个用于答案抽取，另一个用于根据答案生成问题。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;答案抽取&lt;/strong&gt;，给定summary作为输入，T5模型被训练来生成可能的由 [SEP] token分隔开的答案（即在SQuAD的文章上训练——&amp;gt;答案对）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;问题生成&lt;/strong&gt;，上一步得到的答案会先跟summary连接起来，变成这种形式：Answer：Answer Context：ChartSummary。T5模型就会被训练去用图表summary来生成一个来自给定问题的问题。模型在SQuAD的（文章，答案）——&amp;gt;问题对上训练。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;优点：因为这些总结都是人写的，所以生成出来的问题都跟人类写的问题很像。&lt;/p&gt;
+&lt;p&gt;缺点：T5的问题生成模型可能还是会生成一些不对的问题，因为训练集和测试集领域的不匹配。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;问题不完整。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;问题根据图表根本就回答不了（例如，“哪个省包括了Cape镇”这就是一个不可回答的问题，因为他需要图表以外的知识）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;解决办法：为了过滤掉这样的非法问题，本文设计了一个简单的启发式方法，如果答案不能在图表的数据表格中找到就把这个问题过滤掉。这个启发式方法主要是基于大部分生成问题的答案都是图表元素的值或者标签。&lt;/p&gt;
+&lt;p&gt;用了这个启发式方法后，我们手工分析了1250个问答对，并发现这些问题中86.64%都是完整且可回答的，并且对于给定的图表是正确的。&lt;/p&gt;
+&lt;p&gt;此外，为了评价的公平性，我们手动清理了机器生成数据集的测试集，移除了非法的问题。&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;323-数据划分&#34;
+    &gt;3.2.3 数据划分&lt;a href=&#34;#323-%e6%95%b0%e6%8d%ae%e5%88%92%e5%88%86&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;随机将人类写的和机器生成的问答对划分为了训练、验证和测试集，划分方式见表2。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;33-数据集分析&#34;
+    &gt;3.3 数据集分析&lt;a href=&#34;#33-%e6%95%b0%e6%8d%ae%e9%9b%86%e5%88%86%e6%9e%90&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;图表类型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;数据集有三种广泛使用的图表类型：柱形图、折线图和饼图（见表3）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;柱形图&lt;/strong&gt;是在所有数据集中最常见的图表，因为柱形图是在真实世界中用得很广泛。&lt;/p&gt;
+&lt;p&gt;进一步将柱形图、折线图和饼图分为了&lt;strong&gt;简单版&lt;/strong&gt;和复杂版。&lt;/p&gt;
+&lt;p&gt;划分的依据：简单版的数据表格只有两列，复杂版的数据图表有很多列（例如堆叠柱形图、成组柱形图、多条线的折线图）。&lt;/p&gt;
+&lt;p&gt;柱形图：79.4%是简单柱形图，29.6%是复杂柱形图。&lt;/p&gt;
+&lt;p&gt;折线图：61%是简单折线图，39%是复杂折线图。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基本语言学数据&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;有&lt;strong&gt;更多独有的词&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在问答对类型和问题和答案中&lt;/p&gt;
+&lt;p&gt;ChartQA-H中问题和答案中独有词分别有6150个和4319个。&lt;/p&gt;
+&lt;p&gt;ChartQA-M的问题和答案中独有词分别有12379和11979个。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;句法结构多样&lt;/p&gt;
+&lt;p&gt;问题覆盖到了更多样的句法结构，有时会用到一些&lt;strong&gt;非正式的表达&lt;/strong&gt;和&lt;strong&gt;同义替换&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;总的来说，这说明本文数据集&lt;strong&gt;语言变化丰富&lt;/strong&gt;，可能给图表问答任务带来更大的挑战。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;话题分布多样&lt;/p&gt;
+&lt;p&gt;因为是从四个不同的来源收集的。政治是所有来源中最常见的一个话题，但在Pew数据集中几乎一半的图标都是关于美国的政治政策的（45.4%）。其他的常见话题包括经济、健康和社会等等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;问题性质&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;为了分析问题的性质，随机选择300个问答对并将它们分成了4种类型（见表4）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;大部分的问题（共占76.33%）要么是&lt;strong&gt;组合型问题&lt;/strong&gt;，要么是视觉和组合型问题，这反映了真实世界的缩影，人们经常会问这些复杂的推理问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;人们会用到视觉引用，引用图表图形的各种特征来代称该图形，大部分主要是颜色（例如橙色的线）和长度（例如最高的柱形）以及大小（例如最大的扇形）和位置（例如最左边的柱形）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;4method&#34;
+    &gt;4.Method&lt;a href=&#34;#4method&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;41-问题公式化及数据抽取&#34;
+    &gt;4.1 问题公式化及数据抽取&lt;a href=&#34;#41-%e9%97%ae%e9%a2%98%e5%85%ac%e5%bc%8f%e5%8c%96%e5%8f%8a%e6%95%b0%e6%8d%ae%e6%8a%bd%e5%8f%96&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;ChartQA模型流程&lt;/strong&gt;如图2所示。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;图表问答任务公式化：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;给定一个由N个样例的数据集 $\mathcal{D}={c_i,t_i,q_i,a_i}^{N}_{i=1}$。&lt;/p&gt;
+&lt;p&gt;​	$c_i$代表一张图表图片&lt;/p&gt;
+&lt;p&gt;​	$t_i$代表数据表格&lt;/p&gt;
+&lt;p&gt;​	$q_i$代表针对图表$c_i$提出的问题&lt;/p&gt;
+&lt;p&gt;​	$a_i$代表问题的答案。&lt;/p&gt;
+&lt;p&gt;图表问答模型就是给定 $ c_i，t_i和q_i $，需要预测出答案 $a_i$。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ChartQA的2个问题设置：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;**问题设置1：**图表自带对应的可用的基本数据表格。&lt;/p&gt;
+&lt;p&gt;**问题设置2：**图表没有对应的可用的基本数据表格，图表$c_i$的基本数据表格$t_i$用ChartOCR的改进版抽取得到。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ChartOCR&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;定位：先对图表图片中的主要元素（例如图表区域、标题等）和需要被编码成数据的图形记号（例如柱形）进行定位。用的是关&lt;strong&gt;键点检测网络&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确定图形记号代表的值：用检测得到的每种图形的关键点跟轴坐标联系起来去估计图形记号对应的数值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;缺陷：不会将预测的数值跟对应的文本标签（例如x轴标签）对应起来。&lt;/p&gt;
+&lt;p&gt;改进：本文对ChartOCR进行了扩展，使其能够&lt;strong&gt;输出完整的数据表格&lt;/strong&gt;。利用CRAFT模型（OCR）识别出图表元素中的文本。然后把数值跟其文本标签用&lt;strong&gt;位置&lt;/strong&gt;和&lt;strong&gt;颜色&lt;/strong&gt;信息关联起来。&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;42-模型&#34;
+    &gt;4.2 模型&lt;a href=&#34;#42-%e6%a8%a1%e5%9e%8b&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;本文在ChartQA上用的方法主要是基于两个&lt;strong&gt;表格问答上的sota模型&lt;/strong&gt;：&lt;strong&gt;T5和TAPAS&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;模型的输入：问题$ q_i$和数据表格$t_i$。&lt;/p&gt;
+&lt;p&gt;跟表格问答不同的是，图表问答通常会涉及到图表图片的视觉信息的抽取。为了这部分内容，本文也用带有&lt;strong&gt;视觉信息抽取模块&lt;/strong&gt;的图表问答模型进行了实验，把图表图片特征也考虑了进去。T5有一个视觉版的变种——VL-T5，TAPAS没有视觉版本的变体。因此我们扩展了TAPAS使其将图片特征考虑进去，并为其命名为VisionTAPAS。更多细节详见。&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;421-t5&#34;
+    &gt;4.2.1 T5&lt;a href=&#34;#421-t5&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;T5是一个encoder-decoder模型，该模型用了同样的结构和损失函数将NLP任务统一为text-to-text的生成任务。这个模型已经在大量的未标记数据上用自监督降噪目标训练过。&lt;/p&gt;
+&lt;p&gt;微调T5放在我们的ChartQA任务上用，将数据表格展平，跟问题一起送到模型里，其形式为“Question：Question tokens；Table：Flattened table tokens”。模型训练后能够直接生成答案。&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;422-vl-t5&#34;
+    &gt;4.2.2 VL-T5&lt;a href=&#34;#422-vl-t5&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;VL-T5是一个T5的扩展版，将视觉语言任务统一成一个多模态输入的文本生成任务。输入包含了文本token和从图片中用Faster R-CNN抽取出来的对象的&lt;strong&gt;视觉特征&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这个模型是在多个多模态任务上训练的，例如语言建模，视觉问答以及视觉定位任务。&lt;/p&gt;
+&lt;p&gt;把VL-T5用于图表问答任务，主要进行了以下处理：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;对于文本输入，跟T5一样，将数据图表图片的数据表格进行展平操作，并将其跟问题文本连接在一起。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于视觉输入，用Mask R-CNN抽取了图表图片中不同符号（例如柱形、折线等）的视觉特征，Mask R-CNN用ResNet作为其backbone。
+不像原始的VL-T5，提供了固定 数量的目标（36个），在图标问答任务中各个图表的元素数量是不一样的。为了考虑这个因素，我们对抽取出来的视觉特征进行0填充，使得其长度固定为36。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;423-tapas&#34;
+    &gt;4.2.3 TAPAS&lt;a href=&#34;#423-tapas&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;TAPAS扩展了BERT结构，对表格的行和列加了一个位置编码来对表格进行编码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模型输入：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如图3.a所示，模型输入格式如下所示：&lt;strong&gt;[CLS] - 问题tokens - [SEP] - 展平后的表格tokens&lt;/strong&gt;。这些token是用针对表格的位置嵌入加上BERT部分和位置嵌入编码得到的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模型输出：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有两个输出头：aggregation operator头和cell selection头。&lt;/p&gt;
+&lt;p&gt;aggregation operator头会预测一个会施加在cell selection头选出来的单元格中的值上的操作（例如计数、求和、求平均、或者啥都不做）。根据这个操作类型，被单元格选择头选出来的单元格就能计算出最后的答案或者一个用于预测出最后答案的输入。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;预训练：&lt;strong&gt;TAPAS先用表格文本对在掩&lt;/strong&gt;码语言建模目标&lt;/strong&gt;上预训练的。这些表格文本对是从维基百科上爬取的，表格的单元格会被随机蒙住，这个模型就被训练来预测这些单元格。&lt;/p&gt;
+&lt;p&gt;**微调：**用弱监督方式（用答案作为唯一的监督）以端到端可微目标进行微调。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;424-visiontapas&#34;
+    &gt;4.2.4 VisionTAPAS&lt;a href=&#34;#424-visiontapas&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;VisionTaPas是我们在图表问答任务上对TaPas的一个扩展版本。模型结构如图3.b。&lt;/p&gt;
+&lt;p&gt;它包含了三个主要部分：&lt;/p&gt;
+&lt;p&gt;①一个Vision Transformer encoder用于编码图表图片；&lt;/p&gt;
+&lt;p&gt;②一个TaPas encoder用于编码问题和数据表格；&lt;/p&gt;
+&lt;p&gt;③一个交叉模态encoder。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Vision Transformer（ViT）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ViT把transformer的encoder结构用在了视觉任务上。&lt;/p&gt;
+&lt;p&gt;①给定一张2维的图表图片，这张图片会被划分成一个2维的块的序列 ${p_1,&amp;hellip;,p_n}$。&lt;/p&gt;
+&lt;p&gt;②每个块然后会展平并线性投射成一个d维的嵌入向量。&lt;/p&gt;
+&lt;p&gt;③把1维的可学习位置编码加到图片特征中去，用于加入这个块的位置信息。&lt;/p&gt;
+&lt;p&gt;一个L层的ViT encoder会输出一个嵌入序列 $H={h_{cls}^L,h_1^L,&amp;hellip;,h_n^L}$代表特殊的 [CLS] token和图片块。&lt;/p&gt;
+&lt;p&gt;我们用了Dosovitskiy et al. 2021中预训练的权重来初始化ViT这个模块。&lt;/p&gt;
+&lt;p&gt;**TaPas encoder **&lt;/p&gt;
+&lt;p&gt;TaPas encoder用了跟ViT一样的方式对&lt;strong&gt;问题&lt;/strong&gt;和&lt;strong&gt;数据表格&lt;/strong&gt;的token进行编码。&lt;/p&gt;
+&lt;p&gt;对于一个输入的词序列 ${w_{cls},w_1&amp;hellip;,w_m}$，一个L层的TaPas会生成对应的编码结果 $Z={z_{cls}^L,z_1^L,&amp;hellip;,z_m^L}$。&lt;/p&gt;
+&lt;p&gt;这个模块是用Herzig et al. 2020这篇论文里TaPas在WikiTQ数据集上预训练后的权重初始化的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;交叉模特编码器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;**输入：**ViT和TaPas encoder的输出（H和Z）。&lt;/p&gt;
+&lt;p&gt;**输出：**计算得到多模态编码。&lt;/p&gt;
+&lt;p&gt;有4个模块，每个模块都包含一个视觉分支和一个文本表格分支。&lt;/p&gt;
+&lt;p&gt;①两个分支的输入首先分别经过一个多头交叉注意力层，在视觉分支中，询问向量是视觉特征；在文本-表格分支中，key和上下文向量是文本图表特征。&lt;/p&gt;
+&lt;p&gt;②交叉注意力后得到的特征送到一个自注意力层里，后面是一个全连接层。类似transformer模型，每一层都用了层normalization，并且还有残差连接。&lt;/p&gt;
+&lt;p&gt;③最后把TaPas的aggregation operation头和cell selection头加到文本-表格分支的最后一层去了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;扩展其他操作&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;ChartQA数据集中的许多问题需要进行减法或者求比率的操作，这些都是原始的TaPas模型不支持的操作。因此我们扩展了operation头，加了这两种操作（见图3.b）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;相比把他们放在一个基于&lt;strong&gt;最终答案&lt;/strong&gt;的弱监督学习方式上训练（就像TaPas上做的那样）我们发现对单元格提供更直接而非存在潜在噪声的监督会更有效。我们依靠一些启发式方法来生成我们训练数据的监督信号。例如，给定一个问题“A和B之间相差多少？”，答案是5，数据值是3，6，8，我们寻找两个差值是5的数（例如8和3），尽管这可能会产生一些噪声监督信号，但类似的方法已经成功用来给神经网络注入推理能力了。随机采样了100个这样的问题，人工核验结果显示我们的启发式方法会有24%的噪声。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;为了处理固定词库（yes或no）的问题，我们进一步扩展了操作头，把这些类包括进去了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;5evaluation&#34;
+    &gt;5.Evaluation&lt;a href=&#34;#5evaluation&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;51-数据集baseline和评价指标&#34;
+    &gt;5.1 数据集，baseline和评价指标&lt;a href=&#34;#51-%e6%95%b0%e6%8d%ae%e9%9b%86baseline%e5%92%8c%e8%af%84%e4%bb%b7%e6%8c%87%e6%a0%87&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;在3个图表问答数据集上验评估了本文模型的效果，分别是FigureQA、PlotQA和DVQA。同时也在本文新提出的这个ChartQA数据集上验证了效果。&lt;/p&gt;
+&lt;p&gt;把4.2节中介绍的4个benchmarking模型（T5、VL-T5、TaPas、VisionTaPas）跟以下两个baseline进行对比：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;PREFIL&lt;/strong&gt;是一个分类方法，平行融合了问题和图片的特征，然后对这些特征进行聚合，聚合后送到最后的分类层里去。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;**PlotQA***是对PlotQA论文中方法的重新实现。&lt;/p&gt;
+&lt;p&gt;①对图表图片进行解析，抽取出基本数据表格。&lt;/p&gt;
+&lt;p&gt;②然后用了Pasupat and Liang (2015)提出的表格问答模型。&lt;/p&gt;
+&lt;p&gt;缺陷：然而因为PlotQA的数据抽取方法是针对他们的生成数据集使用的，不能很好的泛化应用到真实世界的图表上。&lt;/p&gt;
+&lt;p&gt;所以本文用了本文改进后的ChartOCR方法抽取出来的数据表格来评估PlotQA的效果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;答案认定正确标准&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;根据PlotQA中的做法，本文对数值类型的答案用了一个宽松的准确率评价，允许一点小小的在自动数据抽取过程中可能造成的误差。一个答案误差在5%范围内的时候我们认为它是正确的。对于非数值答案，我们还是需要一个准确匹配，我们才认为答案是正确的。&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;52-结果&#34;
+    &gt;5.2 结果&lt;a href=&#34;#52-%e7%bb%93%e6%9e%9c&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;521-以前的数据集&#34;
+    &gt;5.2.1 以前的数据集&lt;a href=&#34;#521-%e4%bb%a5%e5%89%8d%e7%9a%84%e6%95%b0%e6%8d%ae%e9%9b%86&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;结论1：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;提供数据表格的标注数据：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​		VisionTaPas和VL-T5达到了接近完美的效果。&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;没有提供数据表格的标注数据：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​		本文模型效果稍有下降。&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;结论：&lt;strong&gt;但&lt;/strong&gt;VisionTaPas在DVQA上&lt;/strong&gt;和&lt;strong&gt;VL-T5在PlotQA V1&lt;/strong&gt;上还是达到了sota结果（全自动设置）。&lt;/p&gt;
+&lt;p&gt;​	**数据支撑：**VisionTaPas在DVQA的测试集上达到了94.54%的准确率，比PReFIL高了14.5%。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论2：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;控制变量-是否提供OCR文本标注信息&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	**结论：**本文模型VisionTaPas面对OCR噪声的时候更加健壮。&lt;/p&gt;
+&lt;p&gt;​	**数据支撑：**对比PReFIL和VisionTaPas在DVQA的Test-Novel上的结果，不用标注文本信息而用OCR输出的时候，效果大幅下降了16.49%，而VisionTaPas只下降了0.92%。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论3：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	在PlotQA数据集上，VisionTaPas和VL-T5都比PlotQA模型的效果好很多。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论4：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	VL-T5在PlotQA V1上的效果只比T5的效果差了一点（3.28%），因为PlotQA V1数据集种缺少视觉推理的问题。&lt;/p&gt;
+&lt;p&gt;​	VL-T5在PlotQA V2上的效果只比T5的效果几乎一样（相差0.2%），因为PlotQA V2中的大部分问题也没有涉及到视觉特征。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论5：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	&lt;strong&gt;提供数据表格的标注数据：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​		现象：TaPas模型在FigureQA上达到了sota效果，但在DVQA和PlotQA上表现很差。&lt;/p&gt;
+&lt;p&gt;​		原因：可能是因为FigureQA中大部分问题都是只看数据表格回答出来的；在PlotQA中不是所有问题都能只用数据表格就回答出来，且问题可能会涉及到&lt;strong&gt;求差&lt;/strong&gt;和&lt;strong&gt;求斜率&lt;/strong&gt;的操作，这些都是TaPas不支持的，这说明了本文在VisionTaPa模型中加的扩展操作是非常重要的。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;522-chartqa数据集&#34;
+    &gt;5.2.2 ChartQA数据集&lt;a href=&#34;#522-chartqa%e6%95%b0%e6%8d%ae%e9%9b%86&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;结论6：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	VisionTaPas在两种问题设置上（提供/不提供数据表格标注）都达到了sota效果。&lt;/p&gt;
+&lt;p&gt;​	PReFIL则表现得特别差，因为它是一个分类器模型，在ChartQA这种&lt;strong&gt;开放词库的问题&lt;/strong&gt;上效果就会特别差。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论7：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	现象：VL-T5效果没有T5好。&lt;/p&gt;
+&lt;p&gt;​	原因：可能是因为本文数据集中有很多视觉问题引用了多个图表元素，而VL-T5不能很有效地理解这种引用方式。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论8：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	总的来说不同模型的准确率在我们的数据集上相比之前的数据集来说都很低，这表明人工提出的视觉和推理问题的挑战性之大。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论9：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	本文模型的效果在不提供数据表格标注数据时效果会下降。这说明了从真实世界的各种风格的图表图片中&lt;strong&gt;准确地自动抽取出表格结构&lt;/strong&gt;对于提高图表问答任务的准确率是很重要的。&lt;/p&gt;
+&lt;p&gt;评估了&lt;strong&gt;模型和数据集的&lt;/strong&gt;迁移能力&lt;/p&gt;
+&lt;p&gt;①先在PlotQA数据集上预训练了两个效果最好的模型（VisionTaPas和VL-T5）&lt;/p&gt;
+&lt;p&gt;②然后在ChartQA上对其进行微调。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论10：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	现象：VL-T5的准确率从41.56%提高到了51.84%，VisionTaPas只提升了1.56%。&lt;/p&gt;
+&lt;p&gt;​	原因：可能的原因是VisionTaPas不支持ChartQA这种很常见的这种嵌套的算术操作。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论11：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	总的来说，实验结果像PlotQA这样的大型数据集在&lt;strong&gt;预训练模型&lt;/strong&gt;方面很有用，尽管他的问题都是用一小部分模板生成的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论12：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	实验设置：在PlotQA上训练VL-T5和VisionTaPas，然后&lt;strong&gt;直接&lt;/strong&gt;在ChartQA上直接评估模型的效果&lt;strong&gt;不做任何调整&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;​	现象：模型在PlotQA上训练而不是在其目标数据集上训练的时候，效果大幅下降（VisionTaPas从45.52%降到了31.96%）。&lt;/p&gt;
+&lt;p&gt;​	结论：本文提出的数据集ChartQA在&lt;strong&gt;视觉和组合问题&lt;/strong&gt;上提供了更大的挑战，且词汇变化这些之前数据集所缺乏的，在本文数据集中也有体现。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;53-消融实验&#34;
+    &gt;5.3 消融实验&lt;a href=&#34;#53-%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;结论13：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	目的：评估在VisionTaPas模型上加的扩展部分的重要性，做消融实验来验证。&lt;/p&gt;
+&lt;p&gt;​	实验设置：从模型中移除了&lt;strong&gt;求差值&lt;/strong&gt;和求斜率操作。&lt;/p&gt;
+&lt;p&gt;​	现象：见表6，总的准确率下降了1.8%左右，并且在ChartQA-H（这个数据集里有很多这类问题）上的准确率下降了4.76%。&lt;/p&gt;
+&lt;p&gt;​	结论：表明加上求差值操作和求斜率的操作是非常有用的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论14：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	分析不同图表类型上模型效果。&lt;/p&gt;
+&lt;p&gt;​	现象：VisionTaPas和VL-T5在柱形图上表现得更好，在其它类型的图表上效果下降。&lt;/p&gt;
+&lt;p&gt;​	原因：主要是因为其他图表的数据提取错误率更高，尤其是饼图最为明显，饼图在我们数据集里样本量比较少。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论15：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;​	分析不同问题类型上模型效果。&lt;/p&gt;
+&lt;p&gt;​	实验设置：随机采样了200个人提出的问题。&lt;/p&gt;
+&lt;p&gt;​	现象：数值检索类型的问题表现得更好，视觉类问题效果更差一点。&lt;/p&gt;
+&lt;p&gt;​	原因：因为数值检索类型的问题不需要数值推理，而视觉类问题用视觉特性引用了图表元素，这一点还是比较困难的。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h3 class=&#34;group &#34; id=&#34;54定性分析&#34;
+    &gt;5.4定性分析&lt;a href=&#34;#54%e5%ae%9a%e6%80%a7%e5%88%86%e6%9e%90&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h3&gt;
+
+&lt;p&gt;手动分析模型的预测效果，得出现存模型的关键瓶颈。&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;541-带嵌套操作的逻辑推理&#34;
+    &gt;5.4.1 带嵌套操作的逻辑推理&lt;a href=&#34;#541-%e5%b8%a6%e5%b5%8c%e5%a5%97%e6%93%8d%e4%bd%9c%e7%9a%84%e9%80%bb%e8%be%91%e6%8e%a8%e7%90%86&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;问题：VisionTaPas和VL-T5可以处理不同的数值和逻辑操作，但是他们还是不能很好处理&lt;strong&gt;嵌套操作&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;例如&lt;/strong&gt;图4中的Q1需要模型把两个数字加起来然后减掉另一个数，但是我们的模型只输出了两个数的差。&lt;/p&gt;
+&lt;p&gt;解决方向：后续将会扩展VisionTaPas模型（可能通过把模型用sequential fashion数据集来训练尝试解决这个问题）&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;542-输入表示&#34;
+    &gt;5.4.2 输入表示&lt;a href=&#34;#542-%e8%be%93%e5%85%a5%e8%a1%a8%e7%a4%ba&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;难点：复杂的视觉符号操作可能需要多阶段的推理过程（例如图4中的Q2）。&lt;/p&gt;
+&lt;p&gt;现状&amp;amp;问题：目前本文模型分别输入&lt;strong&gt;数据表格&lt;/strong&gt;和图表的&lt;strong&gt;视觉特征&lt;/strong&gt;，然后将其结合起来。这样的的表示不能完全捕捉到图表结构。&lt;/p&gt;
+&lt;p&gt;解决方向：之后尝试使用更好的表示方法（例如语义图表示），这样的方法可以利用问题、图表对象和数据值之间的关系。&lt;/p&gt;
+
+
+&lt;h4 class=&#34;group &#34; id=&#34;543-计算机视觉挑战&#34;
+    &gt;5.4.3 计算机视觉挑战&lt;a href=&#34;#543-%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%a7%86%e8%a7%89%e6%8c%91%e6%88%98&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h4&gt;
+
+&lt;p&gt;问题：表5表明，本文模型在数据表格的标注数据没给出的时候效果会下降。&lt;/p&gt;
+&lt;p&gt;现状：目前的数据自动抽取模型是模块化的，融合了深度学习方法和基于规则的方法，这样会比较容易出错。&lt;/p&gt;
+&lt;p&gt;解决方向：表明了我们需要&lt;strong&gt;准确率更高的表格抽取模型&lt;/strong&gt;，一个端到端的深度学习方法可以大大提高准确率和针对不同风格图表的泛化能力。&lt;/p&gt;
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;6conclusion&#34;
+    &gt;6.Conclusion&lt;a href=&#34;#6conclusion&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;本文工作1：&lt;strong&gt;提出了一个大型benchmark数据集ChartQA，里面包含了人类针对&lt;/strong&gt;视觉和逻辑推理&lt;/strong&gt;对图表提出的问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;本文工作2：&lt;strong&gt;提出了一个新的方法，结合了&lt;/strong&gt;视觉特征&lt;/strong&gt;和从图表中抽取出来的&lt;strong&gt;表格结构&lt;/strong&gt;来回答问题。&lt;/p&gt;
+&lt;p&gt;**模型效果及结论：**本文的模型评价主要关注方法的先验假设，这也表明了人类提出的视觉和逻辑推理问题的几大难点，体现了自然语言的非正式性、错综复杂以及一些细小的差别。&lt;/p&gt;
 </description></item></channel>
 </rss>
