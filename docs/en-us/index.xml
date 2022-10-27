@@ -1,0 +1,53 @@
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+
+    <channel>
+        <title>ECNU ICALK 702</title>
+        <atom:link href="%7balternate%20%7bRSS%20application/rss&#43;xml%20%20index%20alternate%20%20false%20false%20true%20false%20false%200%7d%20/en-us/index.xml%20http://localhost:1313/en-us/index.xml%7d" rel="self" type="application/rss+xml" />
+        <link>http://localhost:1313/en-us/</link>
+        <managingEditor>ecnu-cs-ica</managingEditor>
+        <description>A simple, performance-first, SEO-friendly Hugo theme</description>
+        <lastBuildDate>Sat, 01 Oct 2022 02:49:13 +0200</lastBuildDate>
+        <language>zh-cn</language>
+        <generator>Hugo -- gohugo.io</generator><item>
+            <title>Flower Gallery</title>
+            <link>http://localhost:1313/en-us/2022/10/01/flower-gallery.html/</link>
+            <pubDate>Sat, 01 Oct 2022 02:49:13 +0200</pubDate>
+            <guid>http://localhost:1313/en-us/2022/10/01/flower-gallery.html/</guid><description>&lt;div class=&#34;gallery-box&#34;&gt;
+    &lt;p&gt;
+
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;h2 class=&#34;group &#34; id=&#34;grid-gallery&#34;
+    &gt;Grid Gallery&lt;a href=&#34;#grid-gallery&#34;
+        &gt;&lt;i class=&#34;eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100&#34;&gt;&lt;/i&gt;&lt;/a
+&gt;&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Spring, the sweet spring, is the year&amp;rsquo;s pleasant king.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;gallery-grid m-3 columns-2 gap-3 sm:columns-3 md:m-4 md:columns-4 md:gap-4&#34;&gt;
+    &lt;p&gt;
+
+
+
+
+&lt;/p&gt;
+
+&lt;/div&gt;
+
+</description></item></channel>
+</rss>
