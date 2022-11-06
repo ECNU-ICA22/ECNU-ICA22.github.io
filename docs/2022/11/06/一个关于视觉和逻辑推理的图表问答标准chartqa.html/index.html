@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="lang-zh-cn">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="keywords" content="VQA,DeepLearning,ECNU,ICA,ICA-702," /><meta name="description" content="CLVQA论文解读" />
+<meta itemprop="description" content="CLVQA论文解读" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta itemprop="name" content="一个关于视觉和逻辑推理的图表问答标准：ChartQA - ECNU ICALK 702" />
+<link href="http://localhost:1313/index.xml" title="一个关于视觉和逻辑推理的图表问答标准：ChartQA - ECNU ICALK 702" type="application/rss+xml" rel="alternate" />
+<title>一个关于视觉和逻辑推理的图表问答标准：ChartQA - ECNU ICALK 702</title><link rel="stylesheet" href="/main.css" /><meta property="og:site_name" content="一个关于视觉和逻辑推理的图表问答标准：ChartQA - ECNU ICALK 702" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="一个关于视觉和逻辑推理的图表问答标准：ChartQA" />
+<meta property="og:description" content="CLVQA论文解读" />
+<meta property="og:url" content="http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/" /><meta property="og:image" content="http://localhost:1313/featured.png" /><meta property="og:image:width" content="1366" /><meta property="og:image:height" content="768" /><meta property="article:publisher" content="http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/" /><meta property="article:published_time" content="2022-11-06T10:34:49&#43;08:00" /><meta property="article:modified_time" content="2022-11-06T15:11:38&#43;08:00" /><meta name="theme-color" content="#dd6065" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="一个关于视觉和逻辑推理的图表问答标准：ChartQA - ECNU ICALK 702" />
+<meta name="apple-mobile-web-app-status-bar-style" content="white" />
+<meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" /><meta name="twitter:title" content="一个关于视觉和逻辑推理的图表问答标准：ChartQA - ECNU ICALK 702" />
+<meta name="twitter:description" content="CLVQA论文解读" />
+<meta name="twitter:url" content="http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/" /><meta name="twitter:image" content="http://localhost:1313/featured.png" /><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /><link rel="manifest" href="/manifest.json" /><link href="/icon.png" rel="shortcut icon" />
+<link href="/icon.png" rel="Bookmark" />
+<link rel="apple-touch-icon" href="/icon.png" /><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "一个关于视觉和逻辑推理的图表问答标准：ChartQA",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http:\/\/localhost:1313\/2022\/11\/06\/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html\/"
+  },"genre": "posts","keywords": "VQA","wordcount": 4281 ,
+  "url": "http:\/\/localhost:1313\/2022\/11\/06\/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html\/","datePublished": "2022-11-06T10:34:49\u002b08:00","dateModified": "2022-11-06T15:11:38\u002b08:00","author": {
+    "@type": "Person",
+    "name": "ecnu-cs-ica"
+  },"description": ""
+}
+</script>
+
+
+    </head>
+    
+    <body class="dark:bg-darkBg dark:text-darkText">
+        <div class="relative mx-auto shadow-lg md:max-w-4xl xl:max-w-4xl 2xl:max-w-4xl">
+            <div class="main flex flex-col justify-between bg-white dark:bg-darkFg"><header class="relative"><nav id="nav" class="navbar top-0 z-10 flex items-center border-b px-5 py-6 dark:border-darkBorder md:px-10">
+        <div class="route-items flex w-full items-center justify-around"><a
+                    title="首页"
+                    data-active-link="/"
+                    href="/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-home flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">首页</span>
+                </a><a
+                    title="关于我"
+                    data-active-link="/about/"
+                    href="/about/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-heart flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">关于我</span>
+                </a><a
+                    title="朋友们"
+                    data-active-link="/links/"
+                    href="/links/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-people flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">朋友们</span>
+                </a><a
+                    title="归档"
+                    data-active-link="/archives/"
+                    href="/archives/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-bar-chart flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">归档</span>
+                </a><a
+                    title="Weibo"
+                    data-active-link="/weibo/"
+                    href="/weibo/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="iconfont icon-weibo flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">Weibo</span>
+                </a><a
+                    title="GitHub"
+                    data-active-link="/github/"
+                    href="/github/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-github flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">GitHub</span>
+                </a><a
+                    title="搜索"
+                    data-active-link="/search/"
+                    href="/search/"
+                    class=" relative flex cursor-pointer flex-col items-center text-gray-700 transition duration-150 ease-[ease]"
+                >
+                    <i
+                        class="eva eva-search flex h-8 w-8 items-center justify-center text-3xl leading-none text-gray-500 transition duration-150 ease-[ease] dark:text-darkTextPlaceholder"
+                    ></i>
+                    <span class="mt-1 block text-xs text-gray-400 dark:text-darkText sm:text-sm md:hidden">搜索</span>
+                </a>
+        </div>
+    </nav><nav class="sub-navbar z-10 flex items-center border-b px-5 py-2 dark:border-darkBorder md:px-10"><a
+                title="分类"
+                data-active-link="/categories/"
+                href="/categories/"
+                class=" relative flex cursor-pointer items-center mr-4 text-gray-400 dark:text-darkText transition duration-150 ease-[ease] hover:text-theme"
+            >
+                <i
+                    class="eva eva-folder leading-none mr-1"
+                ></i>
+                <span>分类</span>
+            </a><a
+                title="标签"
+                data-active-link="/tags/"
+                href="/tags/"
+                class=" relative flex cursor-pointer items-center mr-4 text-gray-400 dark:text-darkText transition duration-150 ease-[ease] hover:text-theme"
+            >
+                <i
+                    class="eva eva-pricetags leading-none mr-1"
+                ></i>
+                <span>标签</span>
+            </a></nav><div class="dark-mode-switch absolute right-0 top-0 z-10 cursor-pointer pr-2 pt-2 text-xl leading-none">
+    <i class="eva eva-moon opacity-20 dark:opacity-70"></i>
+</div>
+</header>
+<main class="relative flex flex-grow " id="swup"><style>:root {
+        --font:microsoft jhenghei,Times New Roman,Times,serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    }</style><div class="type-posts layout- w-full"><div class="relative h-full">
+    <div class="relative h-full">
+        <div class="page-view-article flex h-full flex-col bg-white dark:bg-darkFg"><div class="relative"><div>
+    <div class="-mb-2 w-full p-6 pb-0 text-3xl md:px-10">
+        一个关于视觉和逻辑推理的图表问答标准：ChartQA
+    </div>
+</div></div><div class="article-info border-b p-6 pb-3 text-sm dark:border-darkBorder md:px-10">
+    <div>
+        <div class="mb-3 mr-4 inline-flex items-center sm:rounded-full">
+            <i class="eva eva-clock-outline mr-1"></i>
+            <span>
+                <time
+                    title="发布于 2022年11月6日 10:34:49"datetime="2022-11-06T10:34:49+08:00">2022年11月6日</time
+                >
+            </span>
+        </div><div class="mb-3 mr-4 inline-flex items-center sm:rounded-full">
+                <i class="eva eva-flag-outline mr-1"></i>
+                <span>9 分钟</span>
+            </div></div><div class="mb-3 flex items-center">
+            <i class="eva eva-pricetags-outline mr-1"></i>
+            <span class="mr-3">标签</span><a href="/tags/vqa" title="VQA" class="group mr-2 flex items-center text-sm">
+                    <i class="mr-1 text-gray-400 group-hover:text-theme">#</i>
+                    <span class="text-gray-400 group-hover:text-theme">VQA</span>
+                </a></div><div class="mb-3 flex items-center">
+            <i class="eva eva-folder-outline mr-1"></i>
+            <span class="mr-3">分类</span><a href="/categories/deeplearning" title="DeepLearning" class="group flex items-center text-sm">
+                    <span class="text-gray-400 group-hover:text-theme">DeepLearning</span>
+                    <span class="mx-0.5 group-last:hidden">,</span>
+                </a></div></div><aside
+            class="toc border-b border-gray-300 px-5 py-5 dark:border-darkBorder md:px-10 2xl:fixed 2xl:top-10 2xl:m-0 2xl:-ml-72 2xl:w-72 2xl:border-none 2xl:p-0 2xl:py-4 2xl:pr-4 "
+        >
+            <header>
+                <h1 class="mb-3 text-2xl font-bold 2xl:mb-4">文章目录</h1>
+            </header>
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#abstract">Abstract</a></li>
+        <li><a href="#1introduction">1.introduction</a></li>
+        <li><a href="#2相关工作-略">2.相关工作 略</a></li>
+        <li><a href="#3语言偏见驱动的课程学习">3.语言偏见驱动的课程学习</a></li>
+        <li><a href="#4实验">4.实验</a></li>
+        <li><a href="#5结论">5.结论</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside><section class="article-content typo relative flex-grow px-6 py-5 md:px-10"><i title="更快的阅读" id="bionicReading" class="absolute right-0 top-0 cursor-pointer p-3"
+            ><svg class="w-4 h-4 fill-current text-gray-400" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10811" ><path d="M480 192c-19.2 0-32-12.8-32-32v-128c0-19.2 12.8-32 32-32s32 12.8 32 32v128c0 19.2-12.8 32-32 32zM160 1024c-6.4 0-19.2 0-25.6-6.4l-128-128c0-6.4-6.4-19.2-6.4-25.6s6.4-19.2 6.4-25.6l512-512c12.8-6.4 38.4-6.4 51.2 0l128 128c0 6.4 6.4 19.2 6.4 25.6s-6.4 19.2-6.4 25.6l-512 512c-6.4 6.4-19.2 6.4-25.6 6.4z m-83.2-160l83.2 83.2 467.2-467.2-83.2-83.2-467.2 467.2zM992 576h-128c-19.2 0-32-12.8-32-32s12.8-32 32-32h128c19.2 0 32 12.8 32 32s-12.8 32-32 32zM768 288c-6.4 0-19.2 0-25.6-6.4-12.8-12.8-12.8-32 0-44.8l96-96c12.8-12.8 32-12.8 44.8 0s12.8 32 0 44.8l-96 96c0 6.4-12.8 6.4-19.2 6.4zM256 288c-6.4 0-19.2 0-25.6-6.4L134.4 185.6c-6.4-12.8-6.4-38.4 0-51.2s32-12.8 44.8 0l96 96c12.8 12.8 12.8 32 0 44.8 0 12.8-12.8 12.8-19.2 12.8zM864 896c-6.4 0-19.2 0-25.6-6.4l-96-96c-12.8-12.8-12.8-32 0-44.8s32-12.8 44.8 0l96 96c12.8 12.8 12.8 32 0 44.8 0 6.4-12.8 6.4-19.2 6.4z" p-id="10812"></path><path d="M544 640c-6.4 0-19.2 0-25.6-6.4l-128-128c-6.4-12.8-6.4-38.4 0-51.2s32-12.8 44.8 0l128 128c12.8 12.8 12.8 38.4 6.4 51.2-6.4 6.4-19.2 6.4-25.6 6.4z" p-id="10813"></path></svg></i
+        >
+
+<h1 class="group " id="from-superficial-to-deep-language-bias-driven-curriculum-learning-for-visual-question-answering"
+    >From Superficial to Deep Language Bias driven Curriculum Learning for Visual question Answering<a href="#from-superficial-to-deep-language-bias-driven-curriculum-learning-for-visual-question-answering"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h1>
+
+
+
+<h3 class="group " id="abstract"
+    >Abstract<a href="#abstract"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>Most Visual Question Answering (VQA) models are faced with language bias when learning to answer a given question, thereby failing to understand multimodal knowledge simultaneously. Based on the fact that VQA samples with different levels of language bias contribute differently for answer prediction, in this paper, we overcome the language prior problem by proposing a novel Language Bias driven Curriculum Learning (LBCL) approach, which employs an easy-to-hard learning strategy with a novel diffculty metric Visual Sensitive Coeffcient (VSC). Specifically, in the initial training stage, the VQA model mainly learns the superficial textual correlations between questions and answers (easy concept) from more-biased examples, and then progressively focuses on learning the multimodal reasoning (hard concept) from less-biased examples in the following stages. The curriculum selection of examples on different stages is according to our proposed diffculty metric VSC, which is to evaluate the diffculty driven by the language bias of each VQA sample. Furthermore, to avoid the catastrophic forgetting of the learned concept during the multi-stage learning procedure, we propose to integrate knowledge distillation into the curriculum learning framework. Extensive experiments show that our LBCL can be generally applied to common VQA baseline models, and achieves remarkably better performance on the VQA-CP v1 and v2 datasets, with an overall 20% accuracy boost over baseline models.</p>
+
+
+<h3 class="group " id="1introduction"
+    >1.introduction<a href="#1introduction"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>在本文中，作者探索了课程学习（CL）的思想，用于无偏见的VQA模型，并提出了一种新的语言偏见驱动的课程学习（LBCL）方法。CL旨在通过机器学习模型的训练体现人类的认知过程。它的核心思想是，首先用简单的例子进行训练，然后根据预先定义的训练标准，逐步关注难的例子。在LBCL中，一方面，简单概念指的是问题和答案之间的表面文本关联，这可以很容易地从更有偏见的训练实例中捕捉到（例如，用“黄色”回答“香蕉的颜色”）。尽管这些伪相关性在多模态信息的联合推理中起到了负面作用，但它们仍然包含一些用于答案预测的基本元素（例如问题类型的问题意图和相关答案候选），这将有利于VQA模型在其初始学习阶段缩小答案空间。另一方面，困难的概念是充分利用视觉和文本模式的深度多模态推理。作者声明，硬概念主要是通过训练偏小的示例（例如“绿色香蕉”）获得的，因为它们不能以基于文本相关性的较低错误来规范训练过程，并且需要更多的视觉依赖性来回答问题。</p>
+<p>LBCL的概念图如图1所示。以与“什么运动”问题类型相关的VQA实例为例。如关于答案分配的黄色方框所示，“网球”是给定问题的最优先答案，而一些答案（如“飞盘”和“冲浪”）的比例在列车分割中不够。在LBCL的第一阶段，在原始训练数据上训练VQA模型。这被认为是一个容易学习的阶段，因为训练是由先前的地面真相答案主导的，而VQA模型倾向于更多地了解问题和主要答案之间的文本相关性（“什么运动”的问题可能也可以用“网球”或“棒球”来回答）。同时，在第一阶段预测的基础上，可以基于一种新的视觉敏感系数（VSC）来定义课程学习的难度度量，该系数用于评估VQA样本在严重语言偏见下从视觉模态中获得的益处。在接下来的阶段中，通过课程选择功能来选择具有所需难度的示例，从而实现从简单到困难的过渡。随着训练阶段的进行，更多表面示例的学习梯度将被排除在外，VQA模型转而专注于较少表面的示例（“滑雪”和“足球”）。此外，作者建议将知识蒸馏与课程学习相结合，以实现无偏见的VQA，从而通过容易到难的学习来缓解灾难性遗忘问题。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:104; flex-basis:251px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1_huf2d1edbc116d48727a338e6378f4a485_152160_517x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#d5dad7, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1_huf2d1edbc116d48727a338e6378f4a485_152160_de7150d6bebee17db80fbbd18c02d41a.jpg"width="517"height="494"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1_huf2d1edbc116d48727a338e6378f4a485_152160_517x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1_huf2d1edbc116d48727a338e6378f4a485_152160_517x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1.png"width="517"height="494"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p1_huf2d1edbc116d48727a338e6378f4a485_152160_517x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>这是首次尝试引入课程学习来克服VQA任务中的语言偏见。作者的LBCL模块是通用的和模型无关的，可以应用于各种VQA模型。在本文中，作者证明了LBCL在最近三个表现最佳的基线模型（即UpDn、BAN和MCAN）上缓解语言先验的能力。为了证明LBCL方法的通用性和有效性，对VQA-CP v2和v1数据集进行了广泛的消融研究，这些数据集专门用于评估VQA模型在严重语言先验下的鲁棒性。实验结果表明，作者的方法以20%的显著增益超过了基线模型，并且在附录中描述的VQA-CP v1和v2的小规模训练数据集上获得了优异的性能。最后，作者将LBCL与最先进的去噪策略进行了比较，在VQA-CP v2（60.74%）和v1（61.57%）数据集上实现了显著更好的性能。</p>
+
+
+<h3 class="group " id="2相关工作-略"
+    >2.相关工作 略<a href="#2%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c-%e7%95%a5"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+
+
+<h3 class="group " id="3语言偏见驱动的课程学习"
+    >3.语言偏见驱动的课程学习<a href="#3%e8%af%ad%e8%a8%80%e5%81%8f%e8%a7%81%e9%a9%b1%e5%8a%a8%e7%9a%84%e8%af%be%e7%a8%8b%e5%ad%a6%e4%b9%a0"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>概述框架：LBCL旨在用一种简单易行的策略来训练VQA模型，以克服语言偏见问题。LBCL架构的概述如图2（a）所示，采用了与“天空是什么颜色”相关的VQA培训实例作为一个例子来分析方法。从图2（a）所示的饼图来看，上述问题的基本真相答案以“蓝色”为主，而“红色”和“黄色”是罕见的标签。在第一个学习阶段，在原始偏差数据集上训练带有额外的仅问题模型的VQA模型。在此期间，由于训练答案分布不平衡，VQA模型容易学习更容易的VQA概念（“蓝色”通常用于描述天空的颜色）。此外，利用该阶段的预测作为先验知识，并进一步将难度度量视觉敏感系数（VSC）定义为下一个多阶段易到难训练阶段的训练标准（图2（b）中的紫色框））。</p>
+<p>以下训练阶段（从2到n）保持基于第一阶段中定义的难度度量VSC的训练标准序列。通过课程选择功能（图2（c）中的红色框）实现从容易到难的转换，该功能以所需的难度动态调整训练实例的损失权重。随着训练的进行，来自更多偏见实例（“蓝色”和“黑色”天空）的反向传播梯度将被移除，VQA模型将通过逐渐关注偏见较少的实例（“红色”和“黄色”天空）来学习“硬”概念。此外，为了通过多阶段学习避免灾难性遗忘问题，利用知识蒸馏（图中的绿色方框）将知识从前一学习阶段转移到下一阶段。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:187; flex-basis:450px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2_hu3eca8cff5a88b061f2f5bffc92b65f60_245768_1075x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#d2d4ce, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2_hu3eca8cff5a88b061f2f5bffc92b65f60_245768_09c3cef2fedac68435575fdf7274e6a4.jpg"width="1075"height="573"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2_hu3eca8cff5a88b061f2f5bffc92b65f60_245768_1075x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2_hu3eca8cff5a88b061f2f5bffc92b65f60_245768_1075x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2.png"width="1075"height="573"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p2_hu3eca8cff5a88b061f2f5bffc92b65f60_245768_1075x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h4 class="group " id="31-困难度量"
+    >3.1 困难度量<a href="#31-%e5%9b%b0%e9%9a%be%e5%ba%a6%e9%87%8f"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>难度度量是课程学习不可或缺的组成部分，它作为一个评估指标，代表了VQA示例的特定任务难度。对于克服VQA任务中的语言偏见的课程学习，作者首先引入了一种基于训练误差（TE）的直观难度度量，并进一步提出了一种新的度量视觉敏感系数（VSC），以评估VQA训练实例在语言先验下的问题回答的视觉依赖性。
+训练错误（TE）：基于TE的困难源于这样一种直觉，即更多有偏见的示例往往具有更少的训练错误，因为它们仅根据语言先验就可以轻松实现更高的性能。相反，偏差较小的样本在不平衡的VQA数据集中很少见，并且通常对VQA模型训练不足。因此提出了一种困难度量的方法TE，而对于第i个训练实例的第j个候选答案aij的TEij可以表示为：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:601; flex-basis:1443px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3_hu71b32378a2201e34443e437ccca422de_4655_373x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f7f7f7, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3_hu71b32378a2201e34443e437ccca422de_4655_790b06f4d85bc9ec470b5cdd6acb5535.jpg"width="373"height="62"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3_hu71b32378a2201e34443e437ccca422de_4655_373x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3_hu71b32378a2201e34443e437ccca422de_4655_373x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3.png"width="373"height="62"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p3_hu71b32378a2201e34443e437ccca422de_4655_373x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>然而，TE度量不能反映和测量每个VQA训练样本的偏差水平和视觉依赖性。</p>
+<p>视觉敏感系数（VSC）：为了从语言偏见的角度更好地评估示例的难度，为LBCL方法提出了一种新的难度度量视觉敏感系数。在严重语言偏见下的VQA任务中，简单的概念是问题和答案之间的文本相关性，而困难的是用于预测答案的视觉推理。因此，引入VSC来评估预测答案的VQA模型在强语言偏见下对视觉模态的依赖程度。特别地，基于成对互信息（pmi）定义了难度度量VSC，该互信息测量两个离散随机变量之间的相互依赖性。变量x和y的相互信息如下：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:932; flex-basis:2238px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4_hub859b4620cefe09240e4ee08e6ad39d4_7594_429x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#efefef, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4_hub859b4620cefe09240e4ee08e6ad39d4_7594_d264aca05cabc0f3b65ec51809dff333.jpg"width="429"height="46"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4_hub859b4620cefe09240e4ee08e6ad39d4_7594_429x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4_hub859b4620cefe09240e4ee08e6ad39d4_7594_429x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4.png"width="429"height="46"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p4_hub859b4620cefe09240e4ee08e6ad39d4_7594_429x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:545; flex-basis:1308px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5_huf9ab90848c4887c1137aafd5445eef5b_15383_496x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f0f0f0, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5_huf9ab90848c4887c1137aafd5445eef5b_15383_c5958f5e39fb5e1e4404bd19739d754e.jpg"width="496"height="91"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5_huf9ab90848c4887c1137aafd5445eef5b_15383_496x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5_huf9ab90848c4887c1137aafd5445eef5b_15383_496x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5.png"width="496"height="91"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p5_huf9ab90848c4887c1137aafd5445eef5b_15383_496x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>如果aij是第i个样例的GT，那么VSCij的值越大表示这个回答越依赖于视觉模态，反之VSCij&lt;0，则表明越依赖于文本模态。</p>
+<p>讨论：LBCL中定义难度度量的框架如图2（b）所示。除了VQA模型（等式1）之外，类似于其他去重策略，作者还使用了一个问题模型。它是一个单分支网络，仅基于问题特征来获得有偏差的预测：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:1293; flex-basis:3104px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6_hu85d20cde0d31cc889799c48a39a60ea9_4787_388x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#efefef, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6_hu85d20cde0d31cc889799c48a39a60ea9_4787_1b2e4ce66fb6487481c20ccf6d28d676.jpg"width="388"height="30"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6_hu85d20cde0d31cc889799c48a39a60ea9_4787_388x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6_hu85d20cde0d31cc889799c48a39a60ea9_4787_388x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6.png"width="388"height="30"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p6_hu85d20cde0d31cc889799c48a39a60ea9_4787_388x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h4 class="group " id="32-课程选择函数"
+    >3.2 课程选择函数<a href="#32-%e8%af%be%e7%a8%8b%e9%80%89%e6%8b%a9%e5%87%bd%e6%95%b0"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>课程选择功能是确定在当前阶段应使用哪些示例进行培训。在LBCL中，采用加权方法，根据第一阶段定义的难度度量（VSC或TE）动态选择训练示例。</p>
+<p>选择功能的核心是确定实时模型能力（当前阶段的难度阈值）和总训练阶段的数量。给定预定义的最大模型能力Cmax（最终训练阶段的期望难度阈值）、难度增量参数γ和初始难度值d2（首先在LBCL的第二阶段中使用），第t训练阶段和总训练阶段中的实时模型能力C（t）被格式化为：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:650; flex-basis:1560px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7_hu806ff2e6e6a82ee104313068f3f31f30_6529_377x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f5f5f5, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7_hu806ff2e6e6a82ee104313068f3f31f30_6529_0914324a49384a67083d794e67289381.jpg"width="377"height="58"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7_hu806ff2e6e6a82ee104313068f3f31f30_6529_377x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7_hu806ff2e6e6a82ee104313068f3f31f30_6529_377x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7.png"width="377"height="58"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p7_hu806ff2e6e6a82ee104313068f3f31f30_6529_377x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>然后，通过为第t个学习阶段的交叉熵损失分配第i个示例的二进制权重wi（t）来动态选择训练示例：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:706; flex-basis:1695px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8_hu39eceb3e56d01e8814603466fe5f8474_6908_438x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f4f4f4, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8_hu39eceb3e56d01e8814603466fe5f8474_6908_94391f126b95c64fe6d43375acf7dfe2.jpg"width="438"height="62"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8_hu39eceb3e56d01e8814603466fe5f8474_6908_438x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8_hu39eceb3e56d01e8814603466fe5f8474_6908_438x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8.png"width="438"height="62"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p8_hu39eceb3e56d01e8814603466fe5f8474_6908_438x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>Wi(t)决定与VSC和当前模型的能力C：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:565; flex-basis:1357px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9_hudabb7ad3ec1b608c41fdd4dc24428b5f_5987_379x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f7f7f7, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9_hudabb7ad3ec1b608c41fdd4dc24428b5f_5987_bf02b97906b52e88cd76fc5a787bfd89.jpg"width="379"height="67"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9_hudabb7ad3ec1b608c41fdd4dc24428b5f_5987_379x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9_hudabb7ad3ec1b608c41fdd4dc24428b5f_5987_379x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9.png"width="379"height="67"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p9_hudabb7ad3ec1b608c41fdd4dc24428b5f_5987_379x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>对于多标签分类VQA任务，二进制权重wij（t）被分配给第i个示例的第j个候选答案：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:695; flex-basis:1669px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10_hua79587005f3bb6a3f83a75ea7c1372f6_7937_473x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f4f4f4, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10_hua79587005f3bb6a3f83a75ea7c1372f6_7937_8f410df184bef98b39f54fd09d99a112.jpg"width="473"height="68"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10_hua79587005f3bb6a3f83a75ea7c1372f6_7937_473x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10_hua79587005f3bb6a3f83a75ea7c1372f6_7937_473x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10.png"width="473"height="68"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p10_hua79587005f3bb6a3f83a75ea7c1372f6_7937_473x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>图2c表示了说明了损失函数从容易阶段到困难阶段的变化，第一阶段的损失权重平均分布在每个候选答案上，而在接下来的阶段中，更多偏见示例（“蓝色”和“黑色”）的答案权重为零，从而使VQA模型受益于关注硬示例（“红色”和“黄色”）。</p>
+
+
+<h4 class="group " id="33-知识蒸馏"
+    >3.3 知识蒸馏<a href="#33-%e7%9f%a5%e8%af%86%e8%92%b8%e9%a6%8f"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>LBCL方法是一种由易到难的多阶段学习策略。在逐步训练过程中，VQA模型不可避免地会遗忘之前的知识。针对这一问题，作者提出将知识蒸馏法与课程学习相结合的方法来克服遗忘问题。</p>
+<p>知识蒸馏框架为师生网络结构，如图2(d)所示。具体地说，教师模型是上一阶段预先训练的冻结结构。在当前阶段的训练之前，学生模型复制自教师模型，其参数和网络结构与教师相同。然后，基于相应阶段的课程选择函数，用加权VQA实例训练学生模型。同时也将相同的训练数据输入到分离的教师模型中，并进一步利用其预测结果作为学生模型的监督。实际上，采用常见的Kullback-Leibler散度约束作为蒸馏损失。其提法定义为:</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:347; flex-basis:833px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11_hu731427f6d238827c735085bdc550abae_20332_618x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f4f4f4, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11_hu731427f6d238827c735085bdc550abae_20332_a88d84c57572f8faed678384720f32f7.jpg"width="618"height="178"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11_hu731427f6d238827c735085bdc550abae_20332_618x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11_hu731427f6d238827c735085bdc550abae_20332_618x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11.png"width="618"height="178"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p11_hu731427f6d238827c735085bdc550abae_20332_618x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>Lkd表示与教师模型预测的pt与学生模型预测的ps的KL距离。M表示这一批次的数据量。所以总损失在第t时刻的总损失Lall(t)为（t&gt;=2）：</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:985; flex-basis:2365px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12_huef9bff2721dc1f859efe92ee51c2d218_4876_483x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#f3f3f3, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12_huef9bff2721dc1f859efe92ee51c2d218_4876_df22eef71cf64cd87ad55f8b8f1d27f9.jpg"width="483"height="49"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12_huef9bff2721dc1f859efe92ee51c2d218_4876_483x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12_huef9bff2721dc1f859efe92ee51c2d218_4876_483x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12.png"width="483"height="49"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p12_huef9bff2721dc1f859efe92ee51c2d218_4876_483x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>其中lamda d是一个权重，用于调整VQA损失和知识蒸馏损失之间损失项的贡献。</p>
+<p>算法管道:基于上述LBCL中的关键组件，作者的方法如何工作的详细描述在算法1中总结。通过使用最终训练的模型，测试阶段只执行一次。值得注意的是，LBCL是模型无关的，可以应用于任何一类基于分类的VQA模型，以减轻语言偏差。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:101; flex-basis:243px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13_hue5d2aa95550b08281a1cefaa9e851c54_93371_689x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#eeeeee, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13_hue5d2aa95550b08281a1cefaa9e851c54_93371_25a251fbd7de1d448bf23486a866b7a3.jpg"width="689"height="678"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13_hue5d2aa95550b08281a1cefaa9e851c54_93371_689x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13_hue5d2aa95550b08281a1cefaa9e851c54_93371_689x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13.png"width="689"height="678"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p13_hue5d2aa95550b08281a1cefaa9e851c54_93371_689x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h3 class="group " id="4实验"
+    >4.实验<a href="#4%e5%ae%9e%e9%aa%8c"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+
+
+<h4 class="group " id="41-数据集与baseline"
+    >4.1 数据集与Baseline<a href="#41-%e6%95%b0%e6%8d%ae%e9%9b%86%e4%b8%8ebaseline"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>数据集:在本文中，作者在VQA-CP v1和v2数据集上训练和评估LBCL方法。基线:为了证明LBCL是模型无关的，在三个VQA模型上测试它:UpDn，BAN和MCAN。</p>
+
+
+<h4 class="group " id="42-实现细节-略"
+    >4.2 实现细节 略<a href="#42-%e5%ae%9e%e7%8e%b0%e7%bb%86%e8%8a%82-%e7%95%a5"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+
+
+<h4 class="group " id="43-消融实验"
+    >4.3 消融实验<a href="#43-%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>课程学习vs非课程学习:如表1所示，结合LBCL和VQA模型可以显著提高“整体”性能。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:192; flex-basis:461px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14_hu5a7212397040bde50da55152915c922c_58627_696x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#e6e6e6, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14_hu5a7212397040bde50da55152915c922c_58627_cce4003cceae229ead79deda394e143a.jpg"width="696"height="362"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14_hu5a7212397040bde50da55152915c922c_58627_696x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14_hu5a7212397040bde50da55152915c922c_58627_696x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14.png"width="696"height="362"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p14_hu5a7212397040bde50da55152915c922c_58627_696x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>VSC vs TE:比较了两阶段LBCL下提出的难度指标训练误差(TE)和视觉敏感系数(VSC),如表2所示。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:298; flex-basis:716px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15_hu27782c955db84da1c11bf52282ba8eaf_126128_1430x0_resize_q95_h2_catmullrom_3.webp 1440w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#ebebeb, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15_hu27782c955db84da1c11bf52282ba8eaf_126128_4ee1ad3feb21d3aa4ccc35f877caffb0.jpg"width="1430"height="479"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15_hu27782c955db84da1c11bf52282ba8eaf_126128_1430x0_resize_catmullrom_3.png 1440w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15_hu27782c955db84da1c11bf52282ba8eaf_126128_1430x0_resize_q95_h2_catmullrom_3.webp 1440w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15.png"width="1430"height="479"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p15_hu27782c955db84da1c11bf52282ba8eaf_126128_1430x0_resize_catmullrom_3.png 1440w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>简单概念的重要性。作者还展示了两阶段LBCL中简单概念(文本相关性)的重要性(与“TE vs VSC”中的结果相同)，如表3所示。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:157; flex-basis:377px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17_hu83200d128f156cef06d4cf36734d7aa9_66999_692x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#e9e9e9, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17_hu83200d128f156cef06d4cf36734d7aa9_66999_3a155d6e7f20156e891ff9b1314d09a1.jpg"width="692"height="440"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17_hu83200d128f156cef06d4cf36734d7aa9_66999_692x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17_hu83200d128f156cef06d4cf36734d7aa9_66999_692x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17.png"width="692"height="440"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p17_hu83200d128f156cef06d4cf36734d7aa9_66999_692x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>难度增加参数的变化:图3(a)描述了LBCL与不同难度增加参数W设置的比较，这意味着模型能力C(t)从第t阶段到第t+1阶段的增量。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:301; flex-basis:724px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16_hu6f964b7af82257dc3c9d7eefe5180259_247422_1430x0_resize_q95_h2_catmullrom_3.webp 1440w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#e7e3e4, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16_hu6f964b7af82257dc3c9d7eefe5180259_247422_00e30bfd859eb1c996e2e01c35c60058.jpg"width="1430"height="474"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16_hu6f964b7af82257dc3c9d7eefe5180259_247422_1430x0_resize_catmullrom_3.png 1440w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16_hu6f964b7af82257dc3c9d7eefe5180259_247422_1430x0_resize_q95_h2_catmullrom_3.webp 1440w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16.png"width="1430"height="474"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p16_hu6f964b7af82257dc3c9d7eefe5180259_247422_1430x0_resize_catmullrom_3.png 1440w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>知识蒸馏的贡献:图3(b)显示了LBCL方法中知识蒸馏的优势，所有实验都在LBCL下进行，Cmax = 1.25, W = 0.25(图3(a)中的最佳结果)。</p>
+
+
+<h4 class="group " id="44-与sota的比较"
+    >4.4 与SOTA的比较<a href="#44-%e4%b8%8esota%e7%9a%84%e6%af%94%e8%be%83"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h4>
+
+<p>在VQACPv2和v1数据集上的准确率如表4表5所示。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:107; flex-basis:257px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19_hub3df7f1115bea18923bbeedc1007e093_111674_689x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#e8e8e8, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19_hub3df7f1115bea18923bbeedc1007e093_111674_bc7541df89f9ec08182baf3f5b18183f.jpg"width="689"height="641"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19_hub3df7f1115bea18923bbeedc1007e093_111674_689x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19_hub3df7f1115bea18923bbeedc1007e093_111674_689x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19.png"width="689"height="641"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p19_hub3df7f1115bea18923bbeedc1007e093_111674_689x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:143; flex-basis:345px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20_huaf7511a883760d9b4d1ac374cca717eb_78194_681x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#e9e9e9, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20_huaf7511a883760d9b4d1ac374cca717eb_78194_141481b590809a3e480a6f2a8e63d71b.jpg"width="681"height="473"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20_huaf7511a883760d9b4d1ac374cca717eb_78194_681x0_resize_catmullrom_3.png 1080w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20_huaf7511a883760d9b4d1ac374cca717eb_78194_681x0_resize_q95_h2_catmullrom_3.webp 1080w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20.png"width="681"height="473"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p20_huaf7511a883760d9b4d1ac374cca717eb_78194_681x0_resize_catmullrom_3.png 1080w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+<p>图4显示了VQA样本在“有多少”和“什么运动”这两个问题类型上的VSC(难度度量)不同的定性结果。</p>
+<p><figure
+    
+        class="gallery-image" style=" flex-grow:304; flex-basis:731px"
+    
+>
+    <picture class="noscript-hidden"><source data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21_hua5758a3c7c4804157acb69a86dfbd651_276903_1417x0_resize_q95_h2_catmullrom_3.webp 1440w" type="image/webp" /><img
+            style="background-image: linear-gradient(180deg,#dfdfdc, #ccc);"
+            data-src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21.png"
+            src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21_hua5758a3c7c4804157acb69a86dfbd651_276903_6704c5eed383f4f94792315cc89f448d.jpg"width="1417"height="465"data-srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21_hua5758a3c7c4804157acb69a86dfbd651_276903_1417x0_resize_catmullrom_3.png 1440w"data-zoomable
+            data-lazyload data-lazyload-blur
+        />
+    </picture>
+    <noscript data-lazyload-noscript>
+        <a class="after:hidden" href="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21.png" target="_blank" rel="noopener noreferrer">
+            <picture><source srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21_hua5758a3c7c4804157acb69a86dfbd651_276903_1417x0_resize_q95_h2_catmullrom_3.webp 1440w" type="image/webp" /><img
+                    src="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21.png"width="1417"height="465"srcset="/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/p21_hua5758a3c7c4804157acb69a86dfbd651_276903_1417x0_resize_catmullrom_3.png 1440w"/>
+            </picture>
+        </a>
+    </noscript></figure></p>
+
+
+<h3 class="group " id="5结论"
+    >5.结论<a href="#5%e7%bb%93%e8%ae%ba"
+        ><i class="eva eva-link ml-3 align-middle text-theme opacity-0 transition ease-in-out group-hover:opacity-100"></i></a
+></h3>
+
+<p>作者提出了一种新的基于语言偏差驱动的课程学习模型(LBCL)，使VQA模型通过易难的训练策略克服语言先验。在LBCL结构中，作者设计了一个新的视觉灵敏度度量(VSC)来根据语言先验评估每个VQA实例的视觉灵敏度。最终还将知识蒸馏融入LBCL中，通过渐进训练避免灾难性遗忘问题。大量的实验证明了该方法的有效性。</p>
+</section><div class="px-6 pb-5 pt-4 text-center text-xl text-gray-500 md:px-10 md:pb-10 md:pt-14 flex items-center justify-center"><a
+                class="mr-4 inline-flex h-5 w-5 items-center"
+                title="分享到 Twitter"
+                href="https://twitter.com/share?&text=CLVQA%e8%ae%ba%e6%96%87%e8%a7%a3%e8%af%bb&url=http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="eva eva-twitter hover:text-theme"></i
+            ></a><a
+                class="mr-4 inline-flex h-5 w-5 items-center"
+                title="分享到 Facebook"
+                href="https://www.facebook.com/sharer.php?u=http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><i class="eva eva-facebook hover:text-theme"></i
+            ></a><a
+                class="mr-4 inline-flex h-5 w-5 items-center"
+                title="分享到微博"
+                href="https://service.weibo.com/share/share.php?url=http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/&title=%e4%b8%80%e4%b8%aa%e5%85%b3%e4%ba%8e%e8%a7%86%e8%a7%89%e5%92%8c%e9%80%bb%e8%be%91%e6%8e%a8%e7%90%86%e7%9a%84%e5%9b%be%e8%a1%a8%e9%97%ae%e7%ad%94%e6%a0%87%e5%87%86%ef%bc%9aChartQA&sudaref=localhost%3a1313"
+                target="_blank"
+                rel="noopener noreferrer"
+            ><svg class="inline-block h-5 w-5 fill-current hover:text-theme" viewBox="0 0 1193 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2681" width="200" height="200"> <path d="M456.991736 557.336482c-107.598583 0-194.644628 74.956316-194.644629 166.838252s87.046045 166.838253 194.644629 166.838253c107.598583 0 194.644628-74.956316 194.644628-166.838253s-87.046045-166.838253-194.644628-166.838252zM391.707202 822.101535c-36.269185 0-66.493506-27.806375-66.493507-62.866588s29.015348-62.866588 66.493507-62.866588c36.269185 0 66.493506 27.806375 66.493506 62.866588S427.976387 822.101535 391.707202 822.101535z m93.090909-91.881936c-14.507674 0-26.597403-12.089728-26.597403-26.597403s12.089728-26.597403 26.597403-26.597403 26.597403 12.089728 26.597403 26.597403-12.089728 26.597403-26.597403 26.597403zM239.376623 281.690673C97.9268 394.125148-18.134593 600.859504 30.224321 661.308146c32.642267 41.105077 59.239669-19.343566 124.524203-89.46399 30.224321-32.642267 77.374262-54.403778 122.106258-90.672964 20.552538-16.92562 197.062574-35.060213 230.913813-35.060212 97.9268-99.135773 114.85242-207.943329 74.956316-258.720189-48.358914-59.239669-201.898465-16.92562-343.348288 94.299882z" p-id="2682" ></path> <path d="M808.802834 560.9634C906.729634 461.827627 911.565525 377.199528 870.460449 326.422668c-47.149941-60.448642-211.570248-32.642267-351.811098 78.583235" p-id="2683" ></path> <path d="M605.695396 353.020071c-14.507674 8.46281-25.38843 12.089728-29.015349 7.253837-1.208973-2.417946-1.208973-6.044864 1.208973-9.671783-16.92562-1.208973-33.85124-1.208973-50.776859-1.208973C235.749705 349.393152 0 500.514758 0 686.696576s235.749705 337.303424 527.112161 337.303424 527.112161-151.121606 527.11216-337.303424c0-170.465171-194.644628-309.497048-448.528925-333.676505zM481.171192 959.924439C275.645809 959.924439 108.807556 847.489965 108.807556 708.458087s166.838253-251.466352 372.363636-251.466351 372.363636 112.434475 372.363637 251.466351-166.838253 251.466352-372.363637 251.466352z" p-id="2684" ></path> <path d="M1021.582054 423.140496c-3.626919 0-6.044864 0-9.671782-1.208973-18.134593-4.835891-29.015348-24.179457-22.970485-42.31405 2.417946-7.253837 3.626919-16.92562 3.626919-29.015348 0-65.284534-53.194805-119.688312-119.688312-119.688312-19.343566 0-33.85124-15.716647-33.851239-33.851239s15.716647-33.85124 33.851239-33.85124c103.971665 0 187.390791 84.628099 187.390791 187.390791 0 18.134593-2.417946 33.85124-6.044864 48.358914-4.835891 14.507674-18.134593 24.179457-32.642267 24.179457z" p-id="2685" ></path> <path d="M1146.106257 473.917355c-2.417946 0-6.044864 0-8.46281-1.208972-20.552538-4.835891-32.642267-25.38843-27.806375-45.940969 6.044864-24.179457 8.46281-47.149941 8.46281-71.329397C1118.299882 201.898465 991.357733 74.956316 836.609209 74.956316c-20.552538 0-37.478158-16.92562-37.478158-37.478158S816.056671 0 836.609209 0c197.062574 0 356.646989 159.584416 356.646989 356.646989 0 29.015348-3.626919 59.239669-10.880755 88.255018-3.626919 18.134593-19.343566 29.015348-36.269186 29.015348z" p-id="2686" ></path> </svg></a><i class="eva eva-copy mr-4 cursor-pointer hover:text-theme" title="复制链接" data-clipboard-text="http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/"></i><div class="group h-5 w-5 relative hidden cursor-pointer sm:inline-block">
+                <i title="二维码" class="eva show-qrcode eva-smartphone hover:text-theme"></i>
+                <div
+                    class="qrcode-wrapper p-2 pointer-events-none absolute left-2/4 bottom-10 h-32 w-32 -translate-x-1/2 overflow-hidden rounded border border-gray-300 bg-white opacity-0 transition duration-300 ease-[ease] group-hover:opacity-100"
+                >
+                    <img class="h-full w-full" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=http://localhost:1313/2022/11/06/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/" alt="二维码" />
+                </div>
+            </div></div>
+<div class="border-b dark:border-darkBorder"></div><div class="flex justify-between px-2 py-4 text-xl md:px-6 md:text-2xl">
+    <div>
+        <a
+            href="/2022/10/27/%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E8%A7%86%E8%A7%89%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E7%9A%84%E5%9B%BE%E8%A1%A8%E9%97%AE%E7%AD%94%E6%A0%87%E5%87%86chartqa.html/"
+            title="一个关于视觉和逻辑推理的图表问答标准：ChartQA"
+            class="invisible flex cursor-pointer items-center text-gray-500 transition duration-300 ease-[ease] hover:text-theme dark:text-darkTextPlaceholder dark:hover:text-darkText"style="visibility: visible;">
+            <span class="flex items-center text-5xl opacity-70 dark:bg-opacity-100">
+                <i class="eva eva-chevron-left-outline"></i>
+            </span>
+            <span>上一篇</span>
+        </a>
+    </div><div class="hidden items-center text-xs xl:flex">
+        除特殊声明外，本博客一律使用以下协议进行授权 「
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" target="_blank" rel="noopener noreferrer" class="text-theme">署名 - 非商业性使用 - 禁止演绎 4.0</a>
+        」
+    </div>
+    <div class="flex items-center text-sm xl:hidden">
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" target="_blank" rel="noopener noreferrer" class="text-theme">
+            <img src="/Cc-by-nc-nd.svg" alt="署名 - 非商业性使用 - 禁止演绎 4.0" title="署名 - 非商业性使用 - 禁止演绎 4.0" class="w-24" />
+        </a>
+    </div>
+
+    <a
+        href=""
+        title=""
+        class="invisible flex cursor-pointer items-center text-gray-500 transition duration-300 ease-[ease] hover:text-theme dark:text-darkTextPlaceholder dark:hover:text-darkText">
+        <span>下一篇</span>
+        <span class="flex items-center text-5xl opacity-70 dark:bg-opacity-100">
+            <i class="eva eva-chevron-right-outline"></i>
+        </span>
+    </a>
+</div>
+<div class="border-t py-6 px-6 md:px-8 dark:border-darkBorder">
+    <script src="https://giscus.app/client.js"
+    data-repo="ecnu-ica22/ecnu-ica22.github.io"
+    data-repo-id="R_kgDOIIrgSA"
+    data-category="Gerernal"
+    data-category-id="DIC_kwDOIIrgSM4CRznI"
+    data-mapping="title"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="light"
+    data-lang="zh-CN"
+    data-loading="false"
+    crossorigin="anonymous"
+    data-swup-reload-script
+    async
+>
+</script>
+
+<script data-swup-reload-script>
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onThemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark');
+            }
+        }
+    })();
+    
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+</script>
+</div>
+
+        </div>
+    </div>
+</div>
+</div>
+                </main><footer>
+    <div
+        class="com-footer flex flex-col items-center border-t py-4 px-4 text-sm leading-none text-gray-600 dark:border-darkBorder dark:text-darkTextPlaceholder md:flex-row md:justify-between"
+    >
+        <div class="mb-2 flex items-center justify-between text-center md:mb-0">
+            <span class="">© 2022 - 2022</span>
+            <span class="mx-1.5 opacity-50"> | </span>由 <a data-no-swup class="mx-1 font-bold hover:text-theme" href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> <span class="text-xs opacity-70">❤</span> <a data-no-swup class="mx-1 font-bold hover:text-theme" href="https://github.com/Ice-Hazymoon/hugo-theme-luna" target="_blank" rel="noopener noreferrer">Luna</a> 驱动</div>
+
+        <div class="flex items-center"><span class="noscript-hidden mx-1.5 hidden opacity-50 md:block"> | </span><a data-no-swup href="http://localhost:1313/index.xml" target="_blank" class="mr-1.5 hover:text-theme">
+                    <span class=" md:hidden lg:inline"><svg t="1650887361919" class="mr-0.5 w-96 w-3 fill-current text-inherit inline-block align-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3091"><path d="M320.16155 831.918c0 70.738-57.344 128.082-128.082 128.082S63.99955 902.656 63.99955 831.918s57.344-128.082 128.082-128.082 128.08 57.346 128.08 128.082z m351.32 94.5c-16.708-309.2-264.37-557.174-573.9-573.9C79.31155 351.53 63.99955 366.21 63.99955 384.506v96.138c0 16.83 12.98 30.944 29.774 32.036 223.664 14.568 402.946 193.404 417.544 417.544 1.094 16.794 15.208 29.774 32.036 29.774h96.138c18.298 0.002 32.978-15.31 31.99-33.58z m288.498 0.576C943.19155 459.354 566.92955 80.89 97.00555 64.02 78.94555 63.372 63.99955 77.962 63.99955 96.032v96.136c0 17.25 13.67 31.29 30.906 31.998 382.358 15.678 689.254 322.632 704.93 704.93 0.706 17.236 14.746 30.906 31.998 30.906h96.136c18.068-0.002 32.658-14.948 32.01-33.008z" p-id="3092"></path></svg></span>
+                    <span>RSS</span>
+                </a><a data-no-swup href="http://localhost:1313/sitemap.xml" target="_blank" class="mr-1.5 hover:text-theme">
+                    <span class=" md:hidden lg:inline"><svg t="1650887940556" class="mr-0.5 w-3 fill-current text-inherit inline-block align-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6291"><path d="M950.044 625.778h-68.266v-56.89c0-45.51-39.822-85.332-85.334-85.332h-256v-85.334h68.267c39.822 0 73.956-34.133 73.956-73.955V130.844c0-39.822-34.134-73.955-73.956-73.955H415.29c-39.822 0-73.956 34.133-73.956 73.955v193.423c0 39.822 34.134 73.955 73.956 73.955h68.267v85.334h-256c-45.512 0-85.334 39.822-85.334 85.333v56.889H73.956C34.133 625.778 0 659.91 0 699.733v193.423c0 39.822 34.133 73.955 73.956 73.955h193.422c39.822 0 73.955-34.133 73.955-73.955V699.733c0-39.822-34.133-73.955-73.955-73.955H199.11v-56.89c0-17.066 11.378-28.444 28.445-28.444h568.888c17.067 0 28.445 11.378 28.445 28.445v56.889h-68.267c-39.822 0-73.955 34.133-73.955 73.955v193.423c0 39.822 34.133 73.955 73.955 73.955h193.422c39.823 0 73.956-34.133 73.956-73.955V699.733c0-39.822-34.133-73.955-73.956-73.955z" p-id="6292"></path></svg></span>
+                    <span>Sitemap</span>
+                </a><div id="google_translate_element" class="overflow-hidden rounded border dark:border-darkBorder"></div></div><div id="run-time" class="mt-2 flex-grow text-right md:mt-0">
+    <span>运行时间： </span><b id="run-time-d">0</b>
+    <span class="text-xs">天</span>
+    <b id="run-time-h">0</b>
+    <span class="text-xs">小时</span>
+    <b id="run-time-m">0</b>
+    <span class="text-xs">分钟</span>
+    <b id="run-time-s">0</b>
+    <span class="text-xs">秒</span>
+</div>
+</div>
+
+    <script type="text/javascript">
+window.__theme = {
+    cdn: '',
+    pjax: true ,
+    isServer: true ,
+    $version:"",
+    lang: 'zh-cn',
+    imageZoom: true ,
+    lazyload: true ,
+    bionicReading: {
+        enabled: true ,
+        skipLinks: false ,
+        autoBionic: false ,
+        excludeWords:[],
+        excludeClasses:["github"],
+        excludeNodeNames:[],
+    },
+    katex: true ,
+    search: true ,
+    backtop: true ,
+    pangu: true ,
+    autoDarkMode: true ,
+    googleAnalytics:false,
+    hugoEncrypt: {
+        wrongPasswordText: '密码错误',
+        userStorage:window['sessionStorage'],
+    },
+    console: {
+        enabled: true ,
+        leftColor: '#dd6065',
+        rightColor: '#feb462',
+        leftText: 'ECNU ICALK 702',
+        rightText: 'Powered by Hugo Luna',
+    },
+    assets: {
+        error_svg: "\/images\/error.svg",
+        search_svg: "\/images\/search.svg",
+    },
+    i18n: {
+        copy: {
+            success: "复制成功",
+            failed: "复制失败，请手动复制",
+            copyCode: "复制代码",
+        },
+        search: {
+            untitled: "无标题",
+            loadFailure: "初始化搜索引擎失败",
+            input: "请输入内容...",
+        },
+        darkMode: {
+            dark: "切换到夜间模式",
+            light: "切换到日间模式"
+        }
+    },creatTime: "2022\/10\/01"}
+</script>
+<script type="text/javascript" src="/ts/main.js" defer></script><script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('\/sw.js');
+        });
+    }
+</script>
+<script type="text/javascript" src="/translate-google.js" defer></script><script type="text/javascript">
+    window.translateelement_styles = "\/sass\/translateelement.min.c65796c6c3e4d48c75f72776948be83c5c448d1c5cc466b996b00657c558d28a.css";
+    function googleTranslateElementInit(){
+        new google.translate.TranslateElement({
+            pageLanguage: 'zh-cn',
+            includedLanguages: 'af,ga,sq,it,ar,ja,az,kn,eu,ko,bn,la,be,lv,bg,lt,ca,mk,zh-CN,ms,zh-TW,mt,hr,no,cs,fa,da,pl,nl,pt,en,ro,eo,ru,et,sr,tl,sk,fi,sl,fr,es,gl,sw,ka,sv,de,ta,el,te,gu,th,ht,tr,iw,uk,hi,ur,hu,vi,is,cy,id,yi',
+            autoDisplay:false
+        },'google_translate_element');
+    }
+</script>
+
+
+
+
+
+<script>
+    
+    
+</script>
+
+<script data-swup-reload-script>
+    
+    
+</script>
+</footer>
+</div>
+        </div><a
+        href="#nav"
+        title="返回顶部"
+        id="back-top"
+        class="fixed right-6 bottom-9 z-10 translate-y-3 scale-90 cursor-pointer rounded-full bg-white opacity-0 transition duration-300 ease-[ease] dark:bg-darkBgAccent sm:scale-100"
+    >
+        <div class="relative">
+            <div class="absolute left-0 top-0 flex h-full w-full items-center justify-center text-xl">
+                <i class="eva eva-arrow-upward-outline"></i>
+            </div>
+            <svg id="svg" width="54" height="54" viewBox="0 0 54 54" preserveAspectRatio="xMinYMin meet">
+                <circle
+                    transform="rotate(-90, 27 , 27)"
+                    style="stroke-dasharray: 157, 157; stroke-dashoffset: 157;"
+                    cx="27"
+                    cy="27"
+                    r="25"
+                    fill="none"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke="var(--theme)"
+                />
+            </svg>
+        </div>
+    </a><noscript>
+    <style>
+        .dark-mode-switch,
+        #run-time,
+        #bionicReading,
+        .noscript-hidden,
+        [data-clipboard-text],
+        [data-lazyload] {
+            display: none;
+        }
+        #back-top {
+            opacity: 1;
+        }
+        .noscript-show {
+            display: initial;
+        }
+    </style>
+</noscript>
+</body>
+</html>
